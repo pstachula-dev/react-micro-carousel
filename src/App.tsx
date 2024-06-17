@@ -1,13 +1,11 @@
 import dacia from "./assets/dacia.jpg";
 import "./App.css";
-import {
-  Carousel,
-  CarouselProvider,
-  Dot,
-  NextButton,
-  PrevButton,
-  Slide,
-} from "./simple-headless-carousel/SimpleHeadlessCarousel";
+import { CarouselProvider } from "./lib/simple-headless-carousel/CarouselProvider";
+import { Carousel } from "./lib/simple-headless-carousel/components/Carousel";
+import { Dot } from "./lib/simple-headless-carousel/components/Dot";
+import { NextButton } from "./lib/simple-headless-carousel/components/NextButton";
+import { PrevButton } from "./lib/simple-headless-carousel/components/PrevButton";
+import { Slide } from "./lib/simple-headless-carousel/components/Slide";
 
 const Box = () => {
   return <img src={dacia} alt="Vite logo" />;
