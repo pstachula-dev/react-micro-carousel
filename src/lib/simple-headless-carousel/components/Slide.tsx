@@ -1,19 +1,7 @@
-import { memo, type ReactNode, useContext } from "react";
-import { CarouselContext } from "../CarouselProvider";
+import { memo, type ReactNode } from "react";
 
 export const Slide = memo(
-  ({ children, index }: { children: ReactNode; index: number }) => {
-    const { state } = useContext(CarouselContext);
-
-    return (
-      <div
-        style={{
-          transform: `translateX(${(index - state.currentIndex) * 100}%)`,
-        }}
-        className="absolute w-full transition-transform"
-      >
-        {children}
-      </div>
-    );
+  ({ children }: { children: ReactNode; index: number }) => {
+    return <div className="relative w-full">{children}</div>;
   }
 );

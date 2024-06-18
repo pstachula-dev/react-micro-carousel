@@ -1,44 +1,44 @@
-import { createContext, useMemo, useState, type ReactNode } from "react";
-import { noop } from "./services/noop";
-import type { CarouselContextProps } from "./Carousel.types";
-import { useCarousel } from "./hooks/useCarousel";
-
-export const CarouselContext = createContext<CarouselContextProps>({
-  state: {
-    currentIndex: 0,
-    total: 0,
-  },
-  dispatch: noop,
-});
+import { useMemo, type ReactNode } from "react";
+import {
+  useCarouselReducer,
+  type CarouselState,
+} from "./hooks/useCarouselReducer";
+import { CarouselContext } from "./context/CarouselContext";
+import { useAutoplay } from "./hooks/useAutoplay";
+import { useMergeConfig } from "./hooks/useMergeConfig";
 
 export const CarouselProvider = ({
   children,
   total,
+  autoPlay,
+  autoPlayDelay,
+  slidesVisible,
+  step,
 }: {
   children: ReactNode;
-  total: number;
-}) => {
-  // FIXME: remove later
-  const [, setState] = useState(0);
+} & Partial<CarouselState>) => {
+  const { dispatch, state } = useCarouselReducer();
 
-  const { dispatch, state } = useCarousel();
-
-  // merge initial state with context provider
-  const ctxProvider = useMemo(
+  const ctx = useMemo(
     () => ({
       dispatch,
       state,
-      total,
     }),
-    [state, total, dispatch]
+    [state, dispatch]
   );
 
-  console.log("ctxProvider", ctxProvider);
+  useMergeConfig({
+    dispatch,
+    total,
+    autoPlay,
+    autoPlayDelay,
+    slidesVisible,
+    step,
+  });
+
+  useAutoplay(ctx);
 
   return (
-    <CarouselContext.Provider value={ctxProvider}>
-      <button onClick={() => setState(Math.random())}>Rerender</button>
-      {children}
-    </CarouselContext.Provider>
+    <CarouselContext.Provider value={ctx}>{children}</CarouselContext.Provider>
   );
 };

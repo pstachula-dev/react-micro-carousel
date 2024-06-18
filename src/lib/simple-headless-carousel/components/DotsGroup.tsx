@@ -1,19 +1,17 @@
-import { memo, useContext } from "react";
-import { CarouselContext } from "../CarouselProvider";
+import { memo, useContext, useId } from "react";
+import { CarouselContext } from "../context/CarouselContext";
+import { Dot } from "./Dot";
 
 export const DotsGroup = memo(() => {
-  const { state, dispatch } = useContext(CarouselContext);
+  const id = useId();
+  const { state } = useContext(CarouselContext);
+  const { total, slidesVisible } = state;
+  const dotsLength = total / slidesVisible;
 
   return (
     <div className="flex justify-center space-x-2">
-      {Array.from({ length: state.total }).map((_, idx) => (
-        <button
-          key={idx}
-          onClick={() => dispatch({ action: "setCurrentIndex", value: idx })}
-          className={`w-2 h-2 rounded-full ${
-            state.currentIndex === idx ? "bg-red-500" : "bg-gray-500"
-          }`}
-        />
+      {Array.from({ length: dotsLength }).map((_, idx) => (
+        <Dot key={id + idx} index={idx * slidesVisible} />
       ))}
     </div>
   );

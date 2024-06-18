@@ -1,5 +1,5 @@
 import { memo, useContext } from "react";
-import { CarouselContext } from "../CarouselProvider";
+import { CarouselContext } from "../context/CarouselContext";
 
 export const Dot = memo(({ index }: { index: number }) => {
   const { dispatch, state } = useContext(CarouselContext);

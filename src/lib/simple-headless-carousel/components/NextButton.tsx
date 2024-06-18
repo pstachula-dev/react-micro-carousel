@@ -1,5 +1,5 @@
 import { memo, useContext } from "react";
-import { CarouselContext } from "../CarouselProvider";
+import { CarouselContext } from "../context/CarouselContext";
 import { SliderButton } from "./SliderButton";
 
 export const NextButton = memo(({ onClick }: { onClick?: () => void }) => {
