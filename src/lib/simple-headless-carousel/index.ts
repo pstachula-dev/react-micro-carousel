@@ -1,4 +1,4 @@
-export { CarouselProvider } from "./CarouselProvider";
+export { CarouselProvider } from "./context/CarouselProvider";
 export { Carousel } from "./components/Carousel";
 export { Dot } from "./components/Dot";
 export { DotsGroup } from "./components/DotsGroup";

@@ -2,10 +2,10 @@ import { useMemo, type ReactNode } from "react";
 import {
   useCarouselReducer,
   type CarouselState,
-} from "./hooks/useCarouselReducer";
-import { CarouselContext } from "./context/CarouselContext";
-import { useAutoplay } from "./hooks/useAutoplay";
-import { useMergeConfig } from "./hooks/useMergeConfig";
+} from "../hooks/useCarouselReducer";
+import { CarouselContext } from "./CarouselContext";
+import { useAutoplay } from "../hooks/useAutoplay";
+import { useMergeConfig } from "../hooks/useMergeConfig";
 
 export const CarouselProvider = ({
   children,
