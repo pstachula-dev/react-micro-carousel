@@ -14,6 +14,7 @@ export const CarouselProvider = ({
   autoPlay,
   autoPlayDelay,
   slidesVisible,
+  infinite,
   step,
 }: {
   children: ReactNode;
@@ -33,6 +34,7 @@ export const CarouselProvider = ({
     total,
     width,
     autoPlay,
+    infinite,
     autoPlayDelay,
     slidesVisible,
     step,

@@ -20,20 +20,19 @@ const step = 5;
 export const Carousel = memo(({ children }: { children: ReactNode }) => {
   const { state, dispatch } = useContext(CarouselContext);
 
-  const [localIndex, setLocalIndex] = useState(0);
   const [startPosX, setStartPosX] = useState(0);
   const [prevPosX, setPrevPosX] = useState(0);
   const [posX, setPosX] = useState(0);
   const [isMoving, setIsMoving] = useState(false);
   const [isStart, setIsStart] = useState(false);
 
-  const { total, width, slidesVisible, currentIndex } = state;
+  const { total, width, slidesVisible, currentIndex, infinite } = state;
   const totalWidth = (100 * total) / slidesVisible;
   const totalWidthPercent = `${totalWidth}%`;
 
   useEffect(() => {
     requestPosX(-width * currentIndex);
-  }, [currentIndex, width, localIndex]);
+  }, [currentIndex, width]);
 
   const requestPosX = (posX: number) => {
     requestAnimationFrame(() => setPosX(posX));
@@ -66,28 +65,33 @@ export const Carousel = memo(({ children }: { children: ReactNode }) => {
     setIsMoving(true);
 
     const pageX = getPageX(e);
+    // >5% of the width
     const hasThreshold = Math.abs(startPosX - pageX) > width * 0.05;
     const isGoRight = startPosX > pageX;
 
     if (hasThreshold) {
-      const newIndex = isGoRight ? localIndex + 1 : localIndex - 1;
+      const newIndex = isGoRight ? currentIndex + 1 : currentIndex - 1;
+      console.log({ newIndex });
 
       if (newIndex < 0 || newIndex >= total) {
-        requestPosX(-width * localIndex);
+        if (infinite) {
+          const infiniteIndex = isGoRight ? 0 : total - 1;
+          dispatch({ action: "setCurrentIndex", value: infiniteIndex });
+        } else {
+          dispatch({ action: "setCurrentIndex", value: currentIndex });
+        }
       } else {
-        requestPosX(-width * newIndex);
-        setLocalIndex(newIndex);
         dispatch({ action: "setCurrentIndex", value: newIndex });
       }
     } else {
-      requestPosX(-width * localIndex);
+      dispatch({ action: "setCurrentIndex", value: currentIndex });
     }
   };
 
   const onMouseLeave = () => {
     setIsStart(false);
     setIsMoving(true);
-    requestPosX(-width * localIndex);
+    requestPosX(-width * currentIndex);
   };
 
   const transform = `translate3d(${posX}px, 0, 0)`;
@@ -95,11 +99,9 @@ export const Carousel = memo(({ children }: { children: ReactNode }) => {
   return (
     <div
       className="overflow-hidden  touch-pan-x z-10 cursor-pointer"
-      // Touch Events
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
-      // Mouse Events
       onMouseDown={onTouchStart}
       onMouseMove={onTouchMove}
       onMouseUp={onTouchEnd}

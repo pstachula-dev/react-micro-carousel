@@ -11,6 +11,7 @@ export const useMergeConfig = ({
   autoPlayDelay,
   slidesVisible,
   step,
+  infinite,
   width,
   total,
 }: Partial<CarouselState> & { dispatch: CarouselReduceDispatch }) => {
@@ -22,9 +23,19 @@ export const useMergeConfig = ({
         slidesVisible: slidesVisible || stateDefaults.slidesVisible,
         autoPlay: autoPlay || stateDefaults.autoPlay,
         step: step || stateDefaults.step,
+        infinite: infinite || stateDefaults.infinite,
         width,
         total,
       },
     });
-  }, [dispatch, total, autoPlay, autoPlayDelay, slidesVisible, width, step]);
+  }, [
+    dispatch,
+    total,
+    autoPlay,
+    autoPlayDelay,
+    slidesVisible,
+    infinite,
+    width,
+    step,
+  ]);
 };

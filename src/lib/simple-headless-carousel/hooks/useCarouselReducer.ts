@@ -1,4 +1,5 @@
 import { useReducer, type Dispatch } from "react";
+import { CarouselErrror } from "../services/CarouseError";
 
 type CarouselAction = "next" | "prev" | "setCurrentIndex" | "setConfig";
 
@@ -37,14 +38,15 @@ export const carouselReducer = (
   state: CarouselState,
   { action, value, config }: DispatchOpts
 ): CarouselState => {
-  const { currentIndex, step, total } = state;
+  const { currentIndex, step, total, infinite } = state;
   const localStep = step || 1;
-
-  console.log("action", action);
 
   switch (action) {
     case "next": {
       if (currentIndex + localStep >= total) {
+        console.log(infinite);
+        if (!infinite) return state;
+
         return {
           ...state,
           currentIndex: 0,
@@ -59,6 +61,8 @@ export const carouselReducer = (
 
     case "prev": {
       if (currentIndex - localStep < 0) {
+        if (!infinite) return state;
+
         return {
           ...state,
           currentIndex: total - localStep,
@@ -73,7 +77,7 @@ export const carouselReducer = (
 
     case "setCurrentIndex": {
       if (value === undefined || value < 0 || value >= total) {
-        throw new Error("setCurrentIndex value out of bounds");
+        throw new CarouselErrror("setCurrentIndex value out of bounds");
       }
 
       return {

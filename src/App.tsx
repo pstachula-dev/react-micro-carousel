@@ -29,6 +29,7 @@ function App() {
         width={300}
         autoPlay={false}
         slidesVisible={1}
+        infinite={true}
         step={1}
         total={4}
       >
