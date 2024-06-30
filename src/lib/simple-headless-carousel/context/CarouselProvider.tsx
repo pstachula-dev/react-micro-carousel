@@ -10,6 +10,7 @@ import { useMergeConfig } from "../hooks/useMergeConfig";
 export const CarouselProvider = ({
   children,
   total,
+  width,
   autoPlay,
   autoPlayDelay,
   slidesVisible,
@@ -30,6 +31,7 @@ export const CarouselProvider = ({
   useMergeConfig({
     dispatch,
     total,
+    width,
     autoPlay,
     autoPlayDelay,
     slidesVisible,

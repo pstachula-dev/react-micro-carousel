@@ -11,6 +11,7 @@ export type DispatchOpts = {
 export type CarouselState = {
   currentIndex: number;
   total: number;
+  width: number;
   // optional
   slidesVisible: number;
   step: number;
@@ -23,6 +24,7 @@ export type CarouselReduceDispatch = Dispatch<DispatchOpts>;
 
 export const stateDefaults: CarouselState = {
   currentIndex: 0,
+  width: 0,
   total: 0,
   step: 1,
   autoPlayDelay: 2000,

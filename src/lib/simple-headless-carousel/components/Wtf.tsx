@@ -1,53 +1,80 @@
 import clsx from "clsx";
-import { useState, TouchEvent } from "react";
+import { useState, type MouseEvent, type TouchEvent } from "react";
 
 const Slide = ({ title }) => {
   return <div className="border w-[50%] bg-slate-800 h-[100px]">{title}</div>;
 };
 
 const step = 5;
-const width = 500;
+const width = 300;
 const total = 4;
+
+type Event = TouchEvent | MouseEvent;
+
+function isMouseEvent(event: Event): event is MouseEvent {
+  return event.nativeEvent instanceof MouseEvent || event instanceof MouseEvent;
+}
 
 export const Test = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [startPosX, setStartPosX] = useState(0);
   const [prevPosX, setPrevPosX] = useState(0);
   const [posX, setPosX] = useState(0);
   const [isMoving, setIsMoving] = useState(false);
+  const [isStart, setIsStart] = useState(false);
 
-  const getPageX = (e: TouchEvent) => e.changedTouches[0].pageX;
+  function requestPosX(posX: number) {
+    requestAnimationFrame(() => setPosX(posX));
+  }
 
-  const onTouchMove = (e: TouchEvent) => {
-    const pageX = getPageX(e);
-    const isGoRight = prevPosX > pageX;
-
-    setIsMoving(false);
-    setPosX(isGoRight ? posX - step : posX + step);
+  const getPageX = (e: Event) => {
+    return isMouseEvent(e) ? e.pageX : e.changedTouches[0].pageX;
   };
 
-  const onTouchStart = (e: TouchEvent) => {
+  const onTouchMove = (e: Event) => {
+    if (!isStart || isMoving) return;
     setPrevPosX(getPageX(e));
-  };
 
-  const onTouchEnd = (e: TouchEvent) => {
     const pageX = getPageX(e);
-    const hasThreshold = Math.abs(prevPosX - pageX) > width * 0.1;
     const isGoRight = prevPosX > pageX;
 
+    requestPosX(isGoRight ? posX - step : posX + step);
+  };
+
+  const onTouchStart = (e: Event) => {
+    setIsMoving(false);
+    setIsStart(true);
+    setStartPosX(getPageX(e));
+  };
+
+  const onTouchEnd = (e: Event) => {
+    if (isMoving) return;
+
+    setIsStart(false);
     setIsMoving(true);
+
+    const pageX = getPageX(e);
+    const hasThreshold = Math.abs(startPosX - pageX) > width * 0.1;
+    const isGoRight = startPosX > pageX;
 
     if (hasThreshold) {
       const newIndex = isGoRight ? currentIndex + 1 : currentIndex - 1;
 
       if (newIndex < 0 || newIndex >= total) {
-        setPosX(-width * currentIndex);
+        requestPosX(-width * currentIndex);
       } else {
-        setPosX(-width * newIndex);
+        requestPosX(-width * newIndex);
         setCurrentIndex(newIndex);
       }
     } else {
-      setPosX(-width * currentIndex);
+      requestPosX(-width * currentIndex);
     }
+  };
+
+  const onMouseLeave = () => {
+    setIsStart(false);
+    setIsMoving(true);
+    requestPosX(-width * currentIndex);
   };
 
   const transform = `translate3d(${posX}px, 0, 0)`;
@@ -55,10 +82,16 @@ export const Test = () => {
   return (
     <div>
       <div
+        className="overflow-hidden  touch-pan-x z-10 cursor-pointer"
+        // Touch Events
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
-        className="overflow-hidden  touch-pan-x z-10 cursor-pointer"
+        // Mouse Events
+        onMouseDown={onTouchStart}
+        onMouseMove={onTouchMove}
+        onMouseUp={onTouchEnd}
+        onMouseLeave={onMouseLeave}
       >
         <div
           className={clsx(

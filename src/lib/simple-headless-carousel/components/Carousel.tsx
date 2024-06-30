@@ -1,121 +1,112 @@
-import React, {
+import {
   memo,
   useContext,
-  useRef,
   useState,
   type ReactNode,
+  type MouseEvent,
+  type TouchEvent,
+  useEffect,
 } from "react";
 import { CarouselContext } from "../context/CarouselContext";
 
-type Point = {
-  x: number;
-  y: number;
-  width: number;
-};
+type Event = TouchEvent | MouseEvent;
+
+function isMouseEvent(event: Event): event is MouseEvent {
+  return event.nativeEvent instanceof MouseEvent;
+}
+
+const step = 5;
 
 export const Carousel = memo(({ children }: { children: ReactNode }) => {
   const { state, dispatch } = useContext(CarouselContext);
-  const sliderPositionRef = useRef<HTMLDivElement>(null);
-  const thresholdRef = useRef(false);
-  const prevXRef = useRef<number>(0);
-  const animationRef = useRef<boolean>(false);
-  const translateXRef = useRef<number>(0);
 
-  const { total, currentIndex, slidesVisible } = state;
-  // const itemX = 100 / total;
-  // const totalX = itemX * -currentIndex;
+  const [localIndex, setLocalIndex] = useState(0);
+  const [startPosX, setStartPosX] = useState(0);
+  const [prevPosX, setPrevPosX] = useState(0);
+  const [posX, setPosX] = useState(0);
+  const [isMoving, setIsMoving] = useState(false);
+  const [isStart, setIsStart] = useState(false);
+
+  const { total, width, slidesVisible, currentIndex } = state;
   const totalWidth = (100 * total) / slidesVisible;
+  const totalWidthPercent = `${totalWidth}%`;
 
-  const onMouseMove = ({ pageX }: React.MouseEvent) => {
-    if (!elementPos || !animationRef.current || thresholdRef.current) {
-      return;
-    }
+  useEffect(() => {
+    requestPosX(-width * currentIndex);
+  }, [currentIndex, width, localIndex]);
 
-    if (!prevXRef.current) {
-      prevXRef.current = pageX;
-    }
-
-    const isLeft = prevXRef.current < pageX;
-    const diff = pageX - elementPos.x;
-    const widthFragment = elementPos.width * (1 / total);
-    const actualWidth = widthFragment * -currentIndex;
-    const widthPercent = (Math.abs(diff) * 100) / (elementPos.width / total);
-
-    console.log({ pageX, elementPos: elementPos.x, diff });
-    // console.log("pageX:", pageX);
-    // console.log("prev", prevXRef.current);
-    // console.log("isLeft", isLeft);
-    // console.log("------------------------------------------");
-
-    if (widthPercent > 111) {
-      thresholdRef.current = true;
-
-      requestAnimationFrame(() => {
-        if (isLeft && currentIndex === 0) {
-          translateXRef.current = (total - 1) * -widthFragment;
-        } else if (!isLeft && currentIndex === total - 1) {
-          translateXRef.current = 0;
-        } else {
-          translateXRef.current = isLeft
-            ? actualWidth + widthFragment
-            : actualWidth - widthFragment;
-        }
-      });
-
-      dispatch({ action: isLeft ? "prev" : "next" });
-      return;
-    }
-
-    translateXRef.current = isLeft ? diff : -diff;
-
-    setElWidthDiff(isLeft ? diff : diff - currentIndex * elementPos.width);
+  const requestPosX = (posX: number) => {
+    requestAnimationFrame(() => setPosX(posX));
   };
 
-  const onMouseDown = () => {
-    animationRef.current = true;
-    thresholdRef.current = false;
-
-    const x = sliderPositionRef?.current?.offsetLeft;
-    const y = sliderPositionRef?.current?.offsetTop;
-    const width = sliderPositionRef?.current?.clientWidth;
-
-    if (!x || !y || !width) return;
-
-    // translateXRef.current = 0;
-    prevXRef.current = 0;
-    setElementPos({ x, y, width });
-    setElWidthDiff(0);
+  const getPageX = (e: Event) => {
+    return isMouseEvent(e) ? e.pageX : e.changedTouches[0].pageX;
   };
 
-  const onMouseOff = () => {
-    animationRef.current = false;
-    setElWidthDiff(0);
-    if (elementPos?.width) {
-      translateXRef.current = elementPos.width * currentIndex;
+  const onTouchMove = (e: Event) => {
+    if (!isStart || isMoving) return;
+    setPrevPosX(getPageX(e));
+
+    const pageX = getPageX(e);
+    const isGoRight = prevPosX > pageX;
+
+    requestPosX(isGoRight ? posX - step : posX + step);
+  };
+
+  const onTouchStart = (e: Event) => {
+    setIsMoving(false);
+    setIsStart(true);
+    setStartPosX(getPageX(e));
+  };
+
+  const onTouchEnd = (e: Event) => {
+    if (isMoving) return;
+
+    setIsStart(false);
+    setIsMoving(true);
+
+    const pageX = getPageX(e);
+    const hasThreshold = Math.abs(startPosX - pageX) > width * 0.05;
+    const isGoRight = startPosX > pageX;
+
+    if (hasThreshold) {
+      const newIndex = isGoRight ? localIndex + 1 : localIndex - 1;
+
+      if (newIndex < 0 || newIndex >= total) {
+        requestPosX(-width * localIndex);
+      } else {
+        requestPosX(-width * newIndex);
+        setLocalIndex(newIndex);
+        dispatch({ action: "setCurrentIndex", value: newIndex });
+      }
+    } else {
+      requestPosX(-width * localIndex);
     }
   };
 
-  const width = `${totalWidth}%`;
+  const onMouseLeave = () => {
+    setIsStart(false);
+    setIsMoving(true);
+    requestPosX(-width * localIndex);
+  };
 
-  const transform = `translate3d(${translateXRef.current}px, 0, 0)`;
-
-  // const transform = translateXRef.current
-  //   ? `translate3d(${translateXRef.current}px, 0, 0)`
-  //   : `translate3d(${totalX}%, 0, 0)`;
-
-  // const transform = `translate3d(${totalX}%, 0, 0)`;
+  const transform = `translate3d(${posX}px, 0, 0)`;
 
   return (
     <div
-      onMouseMove={onMouseMove}
-      onMouseDown={onMouseDown}
-      onMouseUp={onMouseOff}
-      onMouseLeave={onMouseOff}
-      className="overflow-hidden touch-pan-x z-10 cursor-pointer"
+      className="overflow-hidden  touch-pan-x z-10 cursor-pointer"
+      // Touch Events
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
+      // Mouse Events
+      onMouseDown={onTouchStart}
+      onMouseMove={onTouchMove}
+      onMouseUp={onTouchEnd}
+      onMouseLeave={onMouseLeave}
     >
       <div
-        ref={sliderPositionRef}
-        style={{ width, transform }}
+        style={{ width: totalWidthPercent, transform }}
         className="flex-row transition-transform duration-300 flex relative min-h-[200px]"
       >
         {children}
