@@ -68,24 +68,23 @@ export const Carousel = memo(({ children }: { children: ReactNode }) => {
     // >5% of the width
     const hasThreshold = Math.abs(startPosX - pageX) > width * 0.05;
     const isGoRight = startPosX > pageX;
+    let finalIndex = currentIndex;
 
     if (hasThreshold) {
-      const newIndex = isGoRight ? currentIndex + 1 : currentIndex - 1;
-      console.log({ newIndex });
+      const thresholdIndex = isGoRight ? currentIndex + 1 : currentIndex - 1;
 
-      if (newIndex < 0 || newIndex >= total) {
+      if (thresholdIndex < 0 || thresholdIndex >= total) {
         if (infinite) {
-          const infiniteIndex = isGoRight ? 0 : total - 1;
-          dispatch({ action: "setCurrentIndex", value: infiniteIndex });
+          finalIndex = isGoRight ? 0 : total - 1;
         } else {
-          dispatch({ action: "setCurrentIndex", value: currentIndex });
+          finalIndex = currentIndex;
         }
       } else {
-        dispatch({ action: "setCurrentIndex", value: newIndex });
+        finalIndex = thresholdIndex;
       }
-    } else {
-      dispatch({ action: "setCurrentIndex", value: currentIndex });
     }
+
+    dispatch({ action: "setCurrentIndex", value: finalIndex });
   };
 
   const onMouseLeave = () => {

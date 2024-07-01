@@ -21,10 +21,12 @@ function App() {
   const [total, setTotal] = useState(4);
 
   return (
-    <div className="w-[300px]">
+    <div className="w-[500px]">
       <button onClick={() => setTotal(total + 1)}>Add slide</button>
 
-      <CarouselProvider
+      <Test />
+
+      {/* <CarouselProvider
         autoPlayDelay={2000}
         width={300}
         autoPlay={false}
@@ -54,7 +56,7 @@ function App() {
 
         <PrevButton />
         <NextButton />
-      </CarouselProvider>
+      </CarouselProvider> */}
     </div>
   );
 }

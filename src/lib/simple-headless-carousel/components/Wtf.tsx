@@ -1,13 +1,39 @@
 import clsx from "clsx";
-import { useState, type MouseEvent, type TouchEvent } from "react";
+import { get } from "http";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type MouseEvent,
+  type MouseEventHandler,
+  type TouchEvent,
+} from "react";
+import { useDebounce } from "../hooks/useDebounce";
 
-const Slide = ({ title }) => {
-  return <div className="border w-[50%] bg-slate-800 h-[100px]">{title}</div>;
+const colors = {
+  0: "bg-slate-700",
+  1: "bg-slate-800",
+  2: "bg-slate-900",
+  3: "bg-slate-950",
 };
 
-const step = 5;
-const width = 300;
+const Slide = ({ title, index }) => {
+  return (
+    <div
+      className={clsx(
+        "border w-[50%] h-[100px] z-0 pointer-events-none",
+        colors[index]
+      )}
+    ></div>
+  );
+};
+
+const step = 1;
+const width = 500;
 const total = 4;
+const threashold = 0.45;
 
 type Event = TouchEvent | MouseEvent;
 
@@ -16,94 +42,126 @@ function isMouseEvent(event: Event): event is MouseEvent {
 }
 
 export const Test = () => {
+  const [isMoving, setIsMoving] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [startPosX, setStartPosX] = useState(0);
-  const [prevPosX, setPrevPosX] = useState(0);
-  const [posX, setPosX] = useState(0);
-  const [isMoving, setIsMoving] = useState(false);
-  const [isStart, setIsStart] = useState(false);
+  const [movePayload, setMovePayload] = useState({ x: 0, moveRight: true });
 
-  function requestPosX(posX: number) {
-    requestAnimationFrame(() => setPosX(posX));
-  }
+  const prevVal = useRef<number | null>(null);
+  const imgRef = useRef<HTMLDivElement>(null);
+  const animationRef = useRef<number | null>(null);
+
+  console.warn("RENDER");
 
   const getPageX = (e: Event) => {
     return isMouseEvent(e) ? e.pageX : e.changedTouches[0].pageX;
   };
 
-  const onTouchMove = (e: Event) => {
-    if (!isStart || isMoving) return;
-    setPrevPosX(getPageX(e));
-
-    const pageX = getPageX(e);
-    const isGoRight = prevPosX > pageX;
-
-    requestPosX(isGoRight ? posX - step : posX + step);
+  const setTranslateX = (x: number) => {
+    animationRef.current = requestAnimationFrame(() => {
+      imgRef.current?.style.setProperty("transform", `translateX(${x}px)`);
+    });
   };
 
-  const onTouchStart = (e: Event) => {
-    setIsMoving(false);
-    setIsStart(true);
-    setStartPosX(getPageX(e));
-  };
+  const handler = useCallback(
+    (event: MouseEvent) => {
+      if (!imgRef.current || isMoving) return;
 
-  const onTouchEnd = (e: Event) => {
-    if (isMoving) return;
+      const { clientX } = event;
+      const hasThreshold = Math.abs(startPosX - clientX) > width * threashold;
+      const diff = startPosX ? clientX - startPosX : 0;
+      const stepsWidth = width * -currentIndex;
 
-    setIsStart(false);
+      setTranslateX(diff + stepsWidth);
+
+      if (hasThreshold) {
+        setMovePayload({
+          x: diff,
+          moveRight: diff > 0,
+        });
+      }
+    },
+    [currentIndex, isMoving, startPosX]
+  );
+
+  const moveBySteps = useCallback(() => {
+    if (animationRef?.current) {
+      cancelAnimationFrame(animationRef.current);
+    }
+
+    console.log(movePayload);
+
     setIsMoving(true);
 
-    const pageX = getPageX(e);
-    const hasThreshold = Math.abs(startPosX - pageX) > width * 0.1;
-    const isGoRight = startPosX > pageX;
+    if (movePayload.x !== 0) {
+      const steps = Math.ceil(Math.abs(movePayload.x) / width);
+      const newIndex = movePayload.moveRight
+        ? currentIndex - steps
+        : currentIndex + steps;
 
-    if (hasThreshold) {
-      const newIndex = isGoRight ? currentIndex + 1 : currentIndex - 1;
+      console.log({ newIndex, total });
 
       if (newIndex < 0 || newIndex >= total) {
-        requestPosX(-width * currentIndex);
+        if (newIndex < 0) {
+          setTranslateX(0);
+          setCurrentIndex(0);
+        } else {
+          setTranslateX(-width * (total - 1));
+          setCurrentIndex(total - 1);
+        }
       } else {
-        requestPosX(-width * newIndex);
+        setTranslateX(-width * newIndex);
         setCurrentIndex(newIndex);
       }
     } else {
-      requestPosX(-width * currentIndex);
+      setTranslateX(-width * currentIndex);
     }
-  };
+  }, [currentIndex, movePayload]);
 
-  const onMouseLeave = () => {
-    setIsStart(false);
-    setIsMoving(true);
-    requestPosX(-width * currentIndex);
-  };
+  useEffect(() => {
+    const clickHandler = () => {
+      if (isMoving) return;
+      moveBySteps();
+    };
 
-  const transform = `translate3d(${posX}px, 0, 0)`;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    window.addEventListener("mousemove", handler as any);
+    window.addEventListener("click", clickHandler);
+
+    return () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      window.removeEventListener("mousemove", handler as any);
+      window.removeEventListener("click", clickHandler);
+    };
+  }, [handler, isMoving, moveBySteps]);
+
+  const onTouchStart = (e: Event) => {
+    setMovePayload({ x: 0, moveRight: true });
+    setIsMoving(false);
+    setStartPosX(getPageX(e));
+  };
 
   return (
     <div>
       <div
-        className="overflow-hidden  touch-pan-x z-10 cursor-pointer"
+        className="overflow-hidden z-10 cursor-pointer"
         // Touch Events
-        onTouchStart={onTouchStart}
-        onTouchMove={onTouchMove}
-        onTouchEnd={onTouchEnd}
+        // onTouchStart={onTouchStart}
+        // onTouchMove={onTouchMove}
+        // onTouchEnd={onTouchEnd}
         // Mouse Events
         onMouseDown={onTouchStart}
-        onMouseMove={onTouchMove}
-        onMouseUp={onTouchEnd}
-        onMouseLeave={onMouseLeave}
+        onMouseUp={moveBySteps}
       >
         <div
-          className={clsx(
-            "flex hover:cursor-grab transition-transform",
-            isMoving && "duration-500"
-          )}
-          style={{ width: "400%", transform }}
+          ref={imgRef}
+          className={clsx("flex", isMoving && "duration-500")}
+          style={{ width: "400%" }}
         >
-          <Slide title="Slide 1" />
-          <Slide title="Slide 2" />
-          <Slide title="Slide 3" />
-          <Slide title="Slide 4" />
+          <Slide title="Slide 1" index={0} />
+          <Slide title="Slide 2" index={1} />
+          <Slide title="Slide 3" index={2} />
+          <Slide title="Slide 4" index={3} />
         </div>
       </div>
     </div>
