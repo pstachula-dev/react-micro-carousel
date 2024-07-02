@@ -30,16 +30,19 @@ const Slide = ({ title, index }) => {
   );
 };
 
-const step = 1;
 const width = 500;
 const total = 4;
 const threashold = 0.45;
 
 type Event = TouchEvent | MouseEvent;
 
-function isMouseEvent(event: Event): event is MouseEvent {
+const isMouseEvent = (event: Event): event is MouseEvent => {
   return event.nativeEvent instanceof MouseEvent || event instanceof MouseEvent;
-}
+};
+
+const getPageX = (e: Event) => {
+  return isMouseEvent(e) ? e.clientX : e.changedTouches[0].clientX;
+};
 
 export const Test = () => {
   const [isMoving, setIsMoving] = useState(true);
@@ -47,27 +50,20 @@ export const Test = () => {
   const [startPosX, setStartPosX] = useState(0);
   const [movePayload, setMovePayload] = useState({ x: 0, moveRight: true });
 
-  const prevVal = useRef<number | null>(null);
   const imgRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<number | null>(null);
 
-  console.warn("RENDER");
-
-  const getPageX = (e: Event) => {
-    return isMouseEvent(e) ? e.pageX : e.changedTouches[0].pageX;
-  };
-
-  const setTranslateX = (x: number) => {
+  const setTranslateX = useCallback((x: number) => {
     animationRef.current = requestAnimationFrame(() => {
       imgRef.current?.style.setProperty("transform", `translateX(${x}px)`);
     });
-  };
+  }, []);
 
   const handler = useCallback(
     (event: MouseEvent) => {
       if (!imgRef.current || isMoving) return;
 
-      const { clientX } = event;
+      const clientX = getPageX(event);
       const hasThreshold = Math.abs(startPosX - clientX) > width * threashold;
       const diff = startPosX ? clientX - startPosX : 0;
       const stepsWidth = width * -currentIndex;
@@ -81,15 +77,13 @@ export const Test = () => {
         });
       }
     },
-    [currentIndex, isMoving, startPosX]
+    [currentIndex, isMoving, setTranslateX, startPosX]
   );
 
   const moveBySteps = useCallback(() => {
     if (animationRef?.current) {
       cancelAnimationFrame(animationRef.current);
     }
-
-    console.log(movePayload);
 
     setIsMoving(true);
 
@@ -98,8 +92,6 @@ export const Test = () => {
       const newIndex = movePayload.moveRight
         ? currentIndex - steps
         : currentIndex + steps;
-
-      console.log({ newIndex, total });
 
       if (newIndex < 0 || newIndex >= total) {
         if (newIndex < 0) {
@@ -116,7 +108,13 @@ export const Test = () => {
     } else {
       setTranslateX(-width * currentIndex);
     }
-  }, [currentIndex, movePayload]);
+  }, [currentIndex, movePayload, setTranslateX]);
+
+  const onTouchStart = useCallback((e: Event) => {
+    setMovePayload({ x: 0, moveRight: true });
+    setIsMoving(false);
+    setStartPosX(getPageX(e));
+  }, []);
 
   useEffect(() => {
     const clickHandler = () => {
@@ -125,30 +123,27 @@ export const Test = () => {
     };
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    window.addEventListener("touchmove", handler as any);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     window.addEventListener("mousemove", handler as any);
     window.addEventListener("click", clickHandler);
 
     return () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       window.removeEventListener("mousemove", handler as any);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      window.removeEventListener("touchmove", handler as any);
       window.removeEventListener("click", clickHandler);
     };
   }, [handler, isMoving, moveBySteps]);
-
-  const onTouchStart = (e: Event) => {
-    setMovePayload({ x: 0, moveRight: true });
-    setIsMoving(false);
-    setStartPosX(getPageX(e));
-  };
 
   return (
     <div>
       <div
         className="overflow-hidden z-10 cursor-pointer"
         // Touch Events
-        // onTouchStart={onTouchStart}
-        // onTouchMove={onTouchMove}
-        // onTouchEnd={onTouchEnd}
+        onTouchStart={onTouchStart}
+        onTouchEnd={moveBySteps}
         // Mouse Events
         onMouseDown={onTouchStart}
         onMouseUp={moveBySteps}
