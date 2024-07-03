@@ -30,18 +30,21 @@ const isMouseEvent = (event: Event): event is MouseEvent => {
   return event instanceof MouseEvent;
 };
 
-const getPageX = (e: Event) => {
-  return isMouseEvent(e) ? e.clientX : e.changedTouches[0].clientX;
+const getPageX = (event: Event) => {
+  return isMouseEvent(event) ? event.clientX : event.changedTouches[0].clientX;
 };
 
 export const Test = () => {
   const [isMoving, setIsMoving] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [startPosX, setStartPosX] = useState(0);
 
-  const movePayload = useRef({ x: 0, moveRight: true });
   const imgRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<number | null>(null);
+  const movePayload = useRef({
+    startX: 0,
+    clientX: 0,
+    moveRight: true,
+  });
 
   const setTranslateX = useCallback((x: number) => {
     animationRef.current = requestAnimationFrame(() => {
@@ -49,15 +52,49 @@ export const Test = () => {
     });
   }, []);
 
-  const moveBySteps = useCallback(() => {
+  const onMoveStart = useCallback((event: Event) => {
+    if (event.target !== imgRef.current) return;
+    event.preventDefault();
+
+    setIsMoving(false);
+    movePayload.current = {
+      clientX: 0,
+      startX: getPageX(event),
+      moveRight: true,
+    };
+  }, []);
+
+  const onMove = useCallback(
+    (event: Event) => {
+      if (!imgRef.current || isMoving) return;
+
+      const startPosX = movePayload.current.startX;
+      const clientX = getPageX(event);
+      const hasThreshold = Math.abs(startPosX - clientX) > width * threashold;
+      const xDiff = startPosX ? clientX - startPosX : 0;
+      const stepsWidth = width * -currentIndex;
+      setTranslateX(xDiff + stepsWidth);
+
+      if (hasThreshold) {
+        movePayload.current = {
+          ...movePayload.current,
+          clientX: xDiff,
+          moveRight: xDiff > 0,
+        };
+      }
+    },
+    [currentIndex, isMoving, setTranslateX]
+  );
+
+  const onMoveEnd = useCallback(() => {
     if (animationRef?.current) {
       cancelAnimationFrame(animationRef.current);
     }
 
     setIsMoving(true);
 
-    if (movePayload.current.x !== 0) {
-      const steps = Math.ceil(Math.abs(movePayload.current.x) / width);
+    if (movePayload.current.clientX !== 0) {
+      const steps = Math.ceil(Math.abs(movePayload.current.clientX) / width);
       const newIndex = movePayload.current.moveRight
         ? currentIndex - steps
         : currentIndex + steps;
@@ -80,51 +117,25 @@ export const Test = () => {
     }
   }, [currentIndex, movePayload, setTranslateX]);
 
-  const onTouchStart = useCallback((event: Event) => {
-    if (event.target !== imgRef.current) return;
-
-    movePayload.current = { x: 0, moveRight: true };
-    setIsMoving(false);
-    setStartPosX(getPageX(event));
-  }, []);
-
-  const handler = useCallback(
-    (event: Event) => {
-      if (!imgRef.current || isMoving) return;
-
-      const clientX = getPageX(event);
-      const hasThreshold = Math.abs(startPosX - clientX) > width * threashold;
-      const xDiff = startPosX ? clientX - startPosX : 0;
-      const stepsWidth = width * -currentIndex;
-
-      setTranslateX(xDiff + stepsWidth);
-
-      if (hasThreshold) {
-        movePayload.current = { x: xDiff, moveRight: xDiff > 0 };
-      }
-    },
-    [currentIndex, isMoving, setTranslateX, startPosX]
-  );
-
   useEffect(() => {
-    document.addEventListener("mousedown", onTouchStart);
-    document.addEventListener("mousemove", handler);
-    document.addEventListener("mouseup", moveBySteps);
+    document.addEventListener("mousemove", onMove);
+    document.addEventListener("mousedown", onMoveStart);
+    document.addEventListener("mouseup", onMoveEnd);
     // touch
-    document.addEventListener("touchstart", onTouchStart);
-    document.addEventListener("touchmove", handler);
-    document.addEventListener("touchend", moveBySteps);
+    document.addEventListener("touchmove", onMove);
+    document.addEventListener("touchstart", onMoveStart);
+    document.addEventListener("touchend", onMoveEnd);
 
     return () => {
-      document.removeEventListener("mousedown", onTouchStart);
-      document.removeEventListener("mousemove", handler);
-      document.removeEventListener("mouseup", moveBySteps);
+      document.removeEventListener("mousemove", onMove);
+      document.removeEventListener("mousedown", onMoveStart);
+      document.removeEventListener("mouseup", onMoveEnd);
       // touch
-      document.removeEventListener("touchstart", onTouchStart);
-      document.removeEventListener("touchmove", handler);
-      document.removeEventListener("touchend", moveBySteps);
+      document.removeEventListener("touchmove", onMove);
+      document.removeEventListener("touchstart", onMoveStart);
+      document.removeEventListener("touchend", onMoveEnd);
     };
-  }, [moveBySteps, onTouchStart, handler]);
+  }, [onMoveEnd, onMoveStart, onMove]);
 
   return (
     <div>
