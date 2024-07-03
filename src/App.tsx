@@ -7,7 +7,7 @@ import { NextButton } from "./lib/simple-headless-carousel/components/NextButton
 import { PrevButton } from "./lib/simple-headless-carousel/components/PrevButton";
 import { Slide } from "./lib/simple-headless-carousel/components/Slide";
 import { useState } from "react";
-import { Test } from "./lib/simple-headless-carousel/components/Wtf";
+import { Test, Test2 } from "./lib/simple-headless-carousel/components/Wtf";
 
 const Box = ({ index }: { index: number }) => {
   return (
@@ -21,8 +21,12 @@ function App() {
   const [total, setTotal] = useState(4);
 
   return (
-    <div className="w-[500px]">
+    <div className="w-[500px] max-w-full">
       <button onClick={() => setTotal(total + 1)}>Add slide</button>
+
+      <Test />
+
+      <hr />
 
       <Test />
 

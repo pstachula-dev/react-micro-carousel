@@ -1,16 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import clsx from "clsx";
-import { get } from "http";
-import {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-  type MouseEvent,
-  type MouseEventHandler,
-  type TouchEvent,
-} from "react";
-import { useDebounce } from "../hooks/useDebounce";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const colors = {
   0: "bg-slate-700",
@@ -23,7 +13,7 @@ const Slide = ({ title, index }) => {
   return (
     <div
       className={clsx(
-        "border w-[50%] h-[100px] z-0 pointer-events-none",
+        "w-[50%] h-[100px] z-0 pointer-events-none",
         colors[index]
       )}
     ></div>
@@ -32,12 +22,12 @@ const Slide = ({ title, index }) => {
 
 const width = 500;
 const total = 4;
-const threashold = 0.45;
+const threashold = 0.25;
 
 type Event = TouchEvent | MouseEvent;
 
 const isMouseEvent = (event: Event): event is MouseEvent => {
-  return event.nativeEvent instanceof MouseEvent || event instanceof MouseEvent;
+  return event instanceof MouseEvent;
 };
 
 const getPageX = (e: Event) => {
@@ -48,8 +38,8 @@ export const Test = () => {
   const [isMoving, setIsMoving] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [startPosX, setStartPosX] = useState(0);
-  const [movePayload, setMovePayload] = useState({ x: 0, moveRight: true });
 
+  const movePayload = useRef({ x: 0, moveRight: true });
   const imgRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<number | null>(null);
 
@@ -59,27 +49,6 @@ export const Test = () => {
     });
   }, []);
 
-  const handler = useCallback(
-    (event: MouseEvent) => {
-      if (!imgRef.current || isMoving) return;
-
-      const clientX = getPageX(event);
-      const hasThreshold = Math.abs(startPosX - clientX) > width * threashold;
-      const diff = startPosX ? clientX - startPosX : 0;
-      const stepsWidth = width * -currentIndex;
-
-      setTranslateX(diff + stepsWidth);
-
-      if (hasThreshold) {
-        setMovePayload({
-          x: diff,
-          moveRight: diff > 0,
-        });
-      }
-    },
-    [currentIndex, isMoving, setTranslateX, startPosX]
-  );
-
   const moveBySteps = useCallback(() => {
     if (animationRef?.current) {
       cancelAnimationFrame(animationRef.current);
@@ -87,9 +56,9 @@ export const Test = () => {
 
     setIsMoving(true);
 
-    if (movePayload.x !== 0) {
-      const steps = Math.ceil(Math.abs(movePayload.x) / width);
-      const newIndex = movePayload.moveRight
+    if (movePayload.current.x !== 0) {
+      const steps = Math.ceil(Math.abs(movePayload.current.x) / width);
+      const newIndex = movePayload.current.moveRight
         ? currentIndex - steps
         : currentIndex + steps;
 
@@ -107,50 +76,65 @@ export const Test = () => {
       }
     } else {
       setTranslateX(-width * currentIndex);
+      setCurrentIndex(currentIndex);
     }
   }, [currentIndex, movePayload, setTranslateX]);
 
-  const onTouchStart = useCallback((e: Event) => {
-    setMovePayload({ x: 0, moveRight: true });
+  const onTouchStart = useCallback((event: Event) => {
+    if (event.target !== imgRef.current) return;
+
+    movePayload.current = { x: 0, moveRight: true };
     setIsMoving(false);
-    setStartPosX(getPageX(e));
+    setStartPosX(getPageX(event));
   }, []);
 
-  useEffect(() => {
-    const clickHandler = () => {
-      if (isMoving) return;
-      moveBySteps();
-    };
+  const handler = useCallback(
+    (event: Event) => {
+      if (!imgRef.current || isMoving) return;
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    window.addEventListener("touchmove", handler as any);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    window.addEventListener("mousemove", handler as any);
-    window.addEventListener("click", clickHandler);
+      const clientX = getPageX(event);
+      const hasThreshold = Math.abs(startPosX - clientX) > width * threashold;
+      const xDiff = startPosX ? clientX - startPosX : 0;
+      const stepsWidth = width * -currentIndex;
+
+      setTranslateX(xDiff + stepsWidth);
+
+      if (hasThreshold) {
+        movePayload.current = { x: xDiff, moveRight: xDiff > 0 };
+      }
+    },
+    [currentIndex, isMoving, setTranslateX, startPosX]
+  );
+
+  useEffect(() => {
+    document.addEventListener("mousedown", onTouchStart);
+    document.addEventListener("mousemove", handler);
+    document.addEventListener("mouseup", moveBySteps);
+    // touch
+    document.addEventListener("touchstart", onTouchStart);
+    document.addEventListener("touchmove", handler);
+    document.addEventListener("touchend", moveBySteps);
 
     return () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      window.removeEventListener("mousemove", handler as any);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      window.removeEventListener("touchmove", handler as any);
-      window.removeEventListener("click", clickHandler);
+      document.removeEventListener("mousedown", onTouchStart);
+      document.removeEventListener("mousemove", handler);
+      document.removeEventListener("mouseup", moveBySteps);
+      // touch
+      document.removeEventListener("touchstart", onTouchStart);
+      document.removeEventListener("touchmove", handler);
+      document.removeEventListener("touchend", moveBySteps);
     };
-  }, [handler, isMoving, moveBySteps]);
+  }, [moveBySteps, onTouchStart, handler]);
 
   return (
     <div>
-      <div
-        className="overflow-hidden z-10 cursor-pointer"
-        // Touch Events
-        onTouchStart={onTouchStart}
-        onTouchEnd={moveBySteps}
-        // Mouse Events
-        onMouseDown={onTouchStart}
-        onMouseUp={moveBySteps}
-      >
+      <div className="overflow-hidden z-10 cursor-pointer">
         <div
           ref={imgRef}
-          className={clsx("flex", isMoving && "duration-500")}
+          className={clsx(
+            "flex",
+            isMoving && "transition-transform duration-500"
+          )}
           style={{ width: "400%" }}
         >
           <Slide title="Slide 1" index={0} />
