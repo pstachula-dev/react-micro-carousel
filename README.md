@@ -25,8 +25,13 @@
 ### TODO:
 
 - [x] Add beta implementation
-- [] Setup CI
-- [] Add docs
-- [] Add unit tests
-- [] Add examples
+- [ ] Setup CI
+- [ ] DX improvments prettier/eslint
+- [ ] Add docs
+- [ ] Add unit tests
+- [ ] Add examples
 - [ ] Add more options
+
+---
+
+- [ ] Publish on NPM

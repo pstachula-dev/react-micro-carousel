@@ -92,7 +92,6 @@ export const Carousel = memo(({ children }: { children: ReactNode }) => {
         cancelAnimationFrame(animationRef.current);
       }
 
-      setIsMoving(true);
       let finalIndex = currentIndex;
 
       if (movePayload.current.clientX !== 0) {
@@ -108,6 +107,7 @@ export const Carousel = memo(({ children }: { children: ReactNode }) => {
         }
       }
 
+      setIsMoving(true);
       setTranslateX(-width * finalIndex);
       setCurrentIndex(finalIndex);
     },
