@@ -24,8 +24,9 @@
 
 ### TODO:
 
-[] Setup CI
-[] Add docs
-[] Add unit tests
-[] Add examples
-[] Add more options
+- [x] Add beta implementation
+- [] Setup CI
+- [] Add docs
+- [] Add unit tests
+- [] Add examples
+- [ ] Add more options
