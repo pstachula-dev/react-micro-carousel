@@ -44,7 +44,6 @@ export const carouselReducer = (
   switch (action) {
     case "next": {
       if (currentIndex + localStep >= total) {
-        console.log(infinite);
         if (!infinite) return state;
 
         return {
