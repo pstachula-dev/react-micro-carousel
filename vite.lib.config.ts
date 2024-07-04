@@ -13,7 +13,7 @@ export default defineConfig({
     minify: true,
     lib: {
       entry: resolve(__dirname, "src/lib/simple-headless-carousel/index.ts"),
-      formats: ["es"],
+      formats: ["es", "cjs"],
       name: "MyLib",
       fileName: "simple-headless-carousel",
     },

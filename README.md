@@ -21,3 +21,11 @@
   <NextButton />
 </CarouselProvider>
 ```
+
+### TODO:
+
+[] Setup CI
+[] Add docs
+[] Add unit tests
+[] Add examples
+[] Add more options
