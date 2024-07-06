@@ -25,6 +25,8 @@
 ### TODO:
 
 - [x] Add beta implementation
+- [ ] Add extra props
+- [ ] Add stable version
 - [ ] Setup CI
 - [ ] DX improvments prettier/eslint
 - [ ] Add docs

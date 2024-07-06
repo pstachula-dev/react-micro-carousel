@@ -1,7 +1,9 @@
 {
-  "name": "my-vue-app",
-  "private": true,
-  "version": "0.0.0",
+  "name": "react-simple-headless-carousel",
+  "private": false,
+  "version": "0.0.3",
+  "sideEffects": false,
+  "description": "React simple headless carousel",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,12 +12,26 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
-  "dependencies": {
-    "clsx": "^2.1.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+  "files": [
+    "/dist"
+  ],
+  "main": "dist/simple-headless-carousel.umd.csj",
+  "module": "dist/simple-headless-carousel.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/simple-headless-carousel.js",
+      "require": "./dist/simple-headless-carousel.umd.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "peerDependencies": {
+    "react": "15.x || 16.x || 17.x || 18.x",
+    "react-dom": "15.x || 16.x || 17.x || 18.x"
   },
   "devDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "@types/node": "^20.14.3",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
@@ -30,6 +46,7 @@
     "tailwindcss": "^3.4.4",
     "typescript": "^5.2.2",
     "vite": "^5.2.0",
+    "vite-plugin-lib-inject-css": "^2.1.1",
     "vite-plugin-dts": "^3.9.1"
   }
 }

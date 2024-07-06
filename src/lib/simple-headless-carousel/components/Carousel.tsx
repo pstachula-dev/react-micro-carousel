@@ -9,7 +9,6 @@ import {
   useMemo,
 } from "react";
 import { CarouselContext } from "../context/CarouselContext";
-import clsx from "clsx";
 import { getSlideClientX } from "../services/getSliderClientX";
 import type { EventMap, SlideEvent } from "../services/types";
 import { manageEvents } from "../services/manageEvents";
@@ -142,10 +141,10 @@ export const Carousel = memo(({ children }: { children: ReactNode }) => {
     <div className="overflow-hidden z-10 cursor-pointer">
       <div
         ref={imgRef}
-        className={clsx(
+        className={[
           "flex flex-row relative min-h-48",
-          isMoving && "transition-transform duration-500"
-        )}
+          isMoving && "transition-transform duration-500",
+        ].join(" ")}
         style={{ width: totalWidthPercent }}
       >
         {children}

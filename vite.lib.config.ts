@@ -1,4 +1,5 @@
 import { defineConfig } from "vite";
+import { libInjectCss } from "vite-plugin-lib-inject-css";
 import { resolve } from "path";
 import react from "@vitejs/plugin-react";
 import dts from "vite-plugin-dts";
@@ -7,14 +8,12 @@ import dts from "vite-plugin-dts";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), dts({ include: ["src/lib"] })],
   build: {
-    sourcemap: true,
     minify: true,
     lib: {
+      name: "simple-headless-react-carousel",
       entry: resolve(__dirname, "src/lib/simple-headless-carousel/index.ts"),
-      formats: ["es", "cjs"],
-      name: "MyLib",
+      formats: ["es", "umd"],
       fileName: "simple-headless-carousel",
     },
     rollupOptions: {
@@ -27,4 +26,12 @@ export default defineConfig({
       },
     },
   },
+  plugins: [
+    react(),
+    libInjectCss(),
+    dts({
+      include: ["src/lib"],
+      rollupTypes: true,
+    }),
+  ],
 });

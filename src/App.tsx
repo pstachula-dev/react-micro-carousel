@@ -1,4 +1,3 @@
-import "./App.css";
 import { DotsGroup } from "./lib/simple-headless-carousel";
 import { CarouselProvider } from "./lib/simple-headless-carousel/context/CarouselProvider";
 import { Carousel } from "./lib/simple-headless-carousel/components/Carousel";
@@ -16,7 +15,7 @@ const Box = ({ index }: { index: number }) => {
 
 function App() {
   return (
-    <div className="w-[500px] max-w-full">
+    <div className="w-[500px] mx-auto mt-10 justify-center">
       <CarouselProvider
         autoPlayDelay={2000}
         width={500}
