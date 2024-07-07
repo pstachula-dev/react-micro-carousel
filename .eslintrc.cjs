@@ -51,6 +51,7 @@ module.exports = {
         'react/jsx-props-no-spreading': 'off',
         'react/require-default-props': 'off',
         'react/prop-types': 'off',
+        'consistent-return': 'off',
         '@typescript-eslint/no-unsafe-enum-comparison': 'off',
         'react/function-component-definition': 'off',
         'react/react-in-jsx-scope': 'off',

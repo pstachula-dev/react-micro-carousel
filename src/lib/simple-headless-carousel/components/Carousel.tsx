@@ -13,6 +13,7 @@ import { getSlideClientX } from '../services/getSliderClientX';
 import type { EventMap, SlideEvent } from '../services/types';
 import { manageEvents } from '../services/manageEvents';
 import { clsx } from '../services/clsx';
+import { useResizeObserver } from '../hooks/useResizeObserver';
 
 const threashold = 0.25;
 
@@ -42,10 +43,11 @@ export const Carousel = memo(
       moveRight: true,
     });
 
-    const { total, width, slidesVisible, currentIndex, infinite } = state;
+    const { refWidth } = useResizeObserver(imgRef);
+    const { total, slidesVisible, currentIndex, infinite } = state;
     const totalWidth = (100 * total) / slidesVisible;
     const totalWidthPercent = `${totalWidth}%`;
-
+    const width = (refWidth || 0) / total;
     const cancelWrongTarget = (event: SlideEvent) =>
       event.target !== imgRef.current;
 
@@ -56,11 +58,19 @@ export const Carousel = memo(
       [dispatch],
     );
 
-    const setTranslateX = useCallback((x: number) => {
-      animationRef.current = requestAnimationFrame(() => {
-        imgRef.current?.style.setProperty('transform', `translateX(${x}px)`);
-      });
-    }, []);
+    const setTranslateX = useCallback(
+      (x: number) => {
+        animationRef.current = requestAnimationFrame(() => {
+          const percent = (x * 100) / width / total;
+
+          imgRef.current?.style.setProperty(
+            'transform',
+            `translateX(${percent}%)`,
+          );
+        });
+      },
+      [width, total],
+    );
 
     const onMoveStart = useCallback((event: SlideEvent) => {
       if (cancelWrongTarget(event)) return;
@@ -155,9 +165,8 @@ export const Carousel = memo(
 
     return (
       <div
-        style={{ width }}
         className={clsx(
-          'relative z-10 cursor-pointer overflow-hidden',
+          'relative z-10 w-full max-w-full cursor-pointer overflow-hidden',
           wrapperClassName,
         )}
       >

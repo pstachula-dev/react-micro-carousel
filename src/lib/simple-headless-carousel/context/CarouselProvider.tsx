@@ -12,7 +12,6 @@ import { useMergeConfig } from '../hooks/useMergeConfig';
  *
  * @param {ReactNode} children - The child components to be wrapped by the Carousel context.
  * @param {number} total - The total number of slides in the carousel.
- * @param {number} width - The width of each slide in the carousel.
  * @param {boolean} autoPlay - Whether the carousel should automatically play.
  * @param {number} autoPlayDelay - The delay between each slide transition in auto play mode.
  * @param {number} slidesVisible - The number of slides visible at a time.

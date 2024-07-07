@@ -1,5 +1,13 @@
 # Simple Headless Carousel React
 
+- Extremely small package size: 2kB gzipped
+- 0 external dependencies
+- Full typescript support
+- Built in with Tailwind, but you can always customize the styles
+- Handling touch/mouse events
+- Lazy image loading (WIP)
+- Responsive support (WIP)
+
 ### How to use:
 
 ```
@@ -25,15 +33,11 @@
 ### TODO:
 
 - [x] Add beta implementation
-- [ ] Add extra props
+- [ ] Add extra option props
 - [ ] Add stable version
-- [ ] Setup CI
-- [ ] DX improvments prettier/eslint
+- [x] Setup CI
+- [x] DX improvments prettier/eslint
 - [ ] Add docs
 - [ ] Add unit tests
 - [ ] Add examples
-- [ ] Add more options
-
----
-
-- [ ] Publish on NPM
+- [x] Publish on NPM

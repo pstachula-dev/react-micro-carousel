@@ -19,7 +19,6 @@ function App() {
       <div className="mx-auto max-w-3xl pt-10">
         <CarouselProvider
           autoPlayDelay={2000}
-          width={500}
           autoPlay={false}
           slidesVisible={1}
           infinite
