@@ -15,7 +15,7 @@ const Box = ({ index }: { index: number }) => {
 
 function App() {
   return (
-    <div className="w-[500px] mx-auto mt-10 justify-center">
+    <div className="mx-auto mt-10 justify-center">
       <CarouselProvider
         autoPlayDelay={2000}
         width={500}
@@ -26,16 +26,16 @@ function App() {
         total={4}
       >
         <Carousel>
-          <Slide index={0}>
+          <Slide>
             <Box index={0} />
           </Slide>
-          <Slide index={1}>
+          <Slide>
             <Box index={1} />
           </Slide>
-          <Slide index={2}>
+          <Slide>
             <Box index={2} />
           </Slide>
-          <Slide index={3}>
+          <Slide>
             <Box index={3} />
           </Slide>
         </Carousel>

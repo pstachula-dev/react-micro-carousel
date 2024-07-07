@@ -1,7 +1,7 @@
 {
   "name": "react-simple-headless-carousel",
   "private": false,
-  "version": "0.0.4",
+  "version": "0.0.6",
   "sideEffects": false,
   "description": "React simple headless carousel",
   "type": "module",
@@ -12,7 +12,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "build:css": "NODE_ENV=production tailwindcss -o dist/simple-headless-carousel.min.css -m",
     "preview": "vite preview",
-    "build:lib": "npm run build:ts && npm run build:css"
+    "build:lib": "NODE_ENV=production npm run build:ts && npm run build:css"
   },
   "files": [
     "/dist"

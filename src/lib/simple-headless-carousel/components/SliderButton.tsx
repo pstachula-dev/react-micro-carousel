@@ -1,6 +1,6 @@
 export type SliderButtonProps = {
-  title: string;
-  action: () => void;
+  title?: string;
+  action?: () => void;
   onClick?: () => void;
   className?: string;
 };
