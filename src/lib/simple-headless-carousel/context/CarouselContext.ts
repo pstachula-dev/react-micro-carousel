@@ -15,3 +15,5 @@ export const CarouselContext = createContext<CarouselContextProps>({
   dispatch: noop,
   state: stateDefaults,
 });
+
+export { type CarouselState };

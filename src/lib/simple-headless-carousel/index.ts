@@ -1,8 +1,8 @@
-export { CarouselProvider } from "./context/CarouselProvider";
-export { CarouselContext } from "./context/CarouselContext";
-export { Carousel } from "./components/Carousel";
-export { Dot } from "./components/Dot";
-export { DotsGroup } from "./components/DotsGroup";
-export { NextButton } from "./components/NextButton";
-export { PrevButton } from "./components/PrevButton";
-export { Slide } from "./components/Slide";
+export * from "./context/CarouselProvider";
+export * from "./context/CarouselContext";
+export * from "./components/Carousel";
+export * from "./components/Dot";
+export * from "./components/DotsGroup";
+export * from "./components/NextButton";
+export * from "./components/PrevButton";
+export * from "./components/Slide";

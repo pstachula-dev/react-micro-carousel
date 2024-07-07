@@ -1,15 +1,30 @@
 import { memo, useContext } from "react";
 import { CarouselContext } from "../context/CarouselContext";
+import { clsx } from "../services/clsx";
 
-export const Dot = memo(({ index }: { index: number }) => {
+type DotProps = {
+  index: number;
+  className?: string;
+};
+
+/**
+ * Dot component for the carousel.
+ *
+ * @param {number} props.index - The index of the dot.
+ * @param {string} [props.className] - The class name for the dot.
+ */
+export const Dot = memo(({ index, className }: DotProps) => {
   const { dispatch, state } = useContext(CarouselContext);
+  const color = state.currentIndex === index ? "bg-red-500" : "bg-gray-500";
+
+  const handleClick = () => {
+    dispatch({ action: "setCurrentIndex", value: index });
+  };
 
   return (
     <button
-      onClick={() => dispatch({ action: "setCurrentIndex", value: index })}
-      className={`w-2 h-2 rounded-full ${
-        state.currentIndex === index ? "bg-red-500" : "bg-gray-500"
-      }`}
+      onClick={handleClick}
+      className={clsx("w-2 h-2 rounded-full", color, className)}
     />
   );
 });

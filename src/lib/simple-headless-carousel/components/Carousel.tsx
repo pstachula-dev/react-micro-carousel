@@ -12,143 +12,167 @@ import { CarouselContext } from "../context/CarouselContext";
 import { getSlideClientX } from "../services/getSliderClientX";
 import type { EventMap, SlideEvent } from "../services/types";
 import { manageEvents } from "../services/manageEvents";
+import { clsx } from "../services/clsx";
 
 const threashold = 0.25;
 
-export const Carousel = memo(({ children }: { children: ReactNode }) => {
-  const { state, dispatch } = useContext(CarouselContext);
-  const [isMoving, setIsMoving] = useState(true);
+type CarouselProps = {
+  children: ReactNode;
+  wrapperClassName?: string;
+  carouselClassName?: string;
+};
 
-  const imgRef = useRef<HTMLDivElement>(null);
-  const animationRef = useRef<number | null>(null);
-  const movePayload = useRef({
-    startX: 0,
-    clientX: 0,
-    moveRight: true,
-  });
+/**
+ * A simple headless carousel
+ *
+ * @param {ReactNode} children The children of the carousel
+ * @param {string} wrapperClassName An optional class to be applied to the wrapper div
+ * @param {string} carouselClassName An optional class to be applied to the carousel div
+ */
+export const Carousel = memo(
+  ({ children, wrapperClassName, carouselClassName }: CarouselProps) => {
+    const { state, dispatch } = useContext(CarouselContext);
+    const [isMoving, setIsMoving] = useState(true);
 
-  const { total, width, slidesVisible, currentIndex, infinite } = state;
-  const totalWidth = (100 * total) / slidesVisible;
-  const totalWidthPercent = `${totalWidth}%`;
-
-  const cancelWrongTarget = (event: SlideEvent) => {
-    return event.target !== imgRef.current;
-  };
-
-  const setCurrentIndex = useCallback(
-    (value: number) => {
-      dispatch({ action: "setCurrentIndex", value });
-    },
-    [dispatch]
-  );
-
-  const setTranslateX = useCallback((x: number) => {
-    animationRef.current = requestAnimationFrame(() => {
-      imgRef.current?.style.setProperty("transform", `translateX(${x}px)`);
-    });
-  }, []);
-
-  const onMoveStart = useCallback((event: SlideEvent) => {
-    if (cancelWrongTarget(event)) return;
-    // Important due to blocking onMouseMove
-    event.preventDefault();
-
-    setIsMoving(false);
-    movePayload.current = {
+    const imgRef = useRef<HTMLDivElement>(null);
+    const animationRef = useRef<number | null>(null);
+    const movePayload = useRef({
+      startX: 0,
       clientX: 0,
-      startX: getSlideClientX(event),
       moveRight: true,
+    });
+
+    const { total, width, slidesVisible, currentIndex, infinite } = state;
+    const totalWidth = (100 * total) / slidesVisible;
+    const totalWidthPercent = `${totalWidth}%`;
+
+    const cancelWrongTarget = (event: SlideEvent) => {
+      return event.target !== imgRef.current;
     };
-  }, []);
 
-  const onMove = useCallback(
-    (event: SlideEvent) => {
-      if (!imgRef.current || isMoving || cancelWrongTarget(event)) return;
+    const setCurrentIndex = useCallback(
+      (value: number) => {
+        dispatch({ action: "setCurrentIndex", value });
+      },
+      [dispatch]
+    );
 
-      const startPosX = movePayload.current.startX;
-      const clientX = getSlideClientX(event);
-      const hasThreshold = Math.abs(startPosX - clientX) > width * threashold;
-      const xDiff = startPosX ? clientX - startPosX : 0;
-      const stepsWidth = width * -currentIndex;
-      setTranslateX(xDiff + stepsWidth);
+    const setTranslateX = useCallback((x: number) => {
+      animationRef.current = requestAnimationFrame(() => {
+        imgRef.current?.style.setProperty("transform", `translateX(${x}px)`);
+      });
+    }, []);
 
-      if (hasThreshold) {
-        movePayload.current = {
-          ...movePayload.current,
-          clientX: xDiff,
-          moveRight: xDiff > 0,
-        };
-      }
-    },
-    [currentIndex, width, isMoving, setTranslateX]
-  );
-
-  const onMoveEnd = useCallback(
-    (event: SlideEvent) => {
+    const onMoveStart = useCallback((event: SlideEvent) => {
       if (cancelWrongTarget(event)) return;
+      // Important due to blocking onMouseMove
+      event.preventDefault();
 
-      if (animationRef?.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
+      setIsMoving(false);
+      movePayload.current = {
+        clientX: 0,
+        startX: getSlideClientX(event),
+        moveRight: true,
+      };
+    }, []);
 
-      let finalIndex = currentIndex;
+    const onMove = useCallback(
+      (event: SlideEvent) => {
+        if (!imgRef.current || isMoving || cancelWrongTarget(event)) return;
 
-      if (movePayload.current.clientX !== 0) {
-        const steps = Math.ceil(Math.abs(movePayload.current.clientX) / width);
-        const newIndex = movePayload.current.moveRight
-          ? currentIndex - steps
-          : currentIndex + steps;
+        const startPosX = movePayload.current.startX;
+        const clientX = getSlideClientX(event);
+        const hasThreshold = Math.abs(startPosX - clientX) > width * threashold;
+        const xDiff = startPosX ? clientX - startPosX : 0;
+        const stepsWidth = width * -currentIndex;
+        setTranslateX(xDiff + stepsWidth);
 
-        if (infinite && (newIndex < 0 || newIndex >= total)) {
-          finalIndex = newIndex > 0 ? 0 : total - 1;
-        } else {
-          finalIndex = newIndex;
+        if (hasThreshold) {
+          movePayload.current = {
+            ...movePayload.current,
+            clientX: xDiff,
+            moveRight: xDiff > 0,
+          };
         }
-      }
+      },
+      [currentIndex, width, isMoving, setTranslateX]
+    );
 
-      setIsMoving(true);
-      setTranslateX(-width * finalIndex);
-      setCurrentIndex(finalIndex);
-    },
-    [setCurrentIndex, setTranslateX, currentIndex, infinite, total, width]
-  );
+    const onMoveEnd = useCallback(
+      (event: SlideEvent) => {
+        if (cancelWrongTarget(event)) return;
 
-  const eventsMap = useMemo(
-    (): EventMap => ({
-      mousemove: onMove,
-      mousedown: onMoveStart,
-      mouseup: onMoveEnd,
-      touchmove: onMove,
-      touchstart: onMoveStart,
-      touchend: onMoveEnd,
-    }),
-    [onMove, onMoveEnd, onMoveStart]
-  );
+        if (animationRef?.current) {
+          cancelAnimationFrame(animationRef.current);
+        }
 
-  useEffect(() => {
-    setTranslateX(-width * currentIndex);
-  }, [setTranslateX, currentIndex, width]);
+        let finalIndex = currentIndex;
 
-  useEffect(() => {
-    manageEvents({ action: "add", eventsMap });
+        if (movePayload.current.clientX !== 0) {
+          const steps = Math.ceil(
+            Math.abs(movePayload.current.clientX) / width
+          );
+          const newIndex = movePayload.current.moveRight
+            ? currentIndex - steps
+            : currentIndex + steps;
 
-    return () => {
-      manageEvents({ action: "remove", eventsMap });
-    };
-  }, [eventsMap]);
+          if (infinite && (newIndex < 0 || newIndex >= total)) {
+            finalIndex = newIndex > 0 ? 0 : total - 1;
+          } else {
+            finalIndex = newIndex;
+          }
+        }
 
-  return (
-    <div className="overflow-hidden z-10 cursor-pointer">
+        setIsMoving(true);
+        setTranslateX(-width * finalIndex);
+        setCurrentIndex(finalIndex);
+      },
+      [setCurrentIndex, setTranslateX, currentIndex, infinite, total, width]
+    );
+
+    const eventsMap = useMemo(
+      (): EventMap => ({
+        mousemove: onMove,
+        mousedown: onMoveStart,
+        mouseup: onMoveEnd,
+        touchmove: onMove,
+        touchstart: onMoveStart,
+        touchend: onMoveEnd,
+      }),
+      [onMove, onMoveEnd, onMoveStart]
+    );
+
+    useEffect(() => {
+      setTranslateX(-width * currentIndex);
+    }, [setTranslateX, currentIndex, width]);
+
+    useEffect(() => {
+      manageEvents({ action: "add", eventsMap });
+
+      return () => {
+        manageEvents({ action: "remove", eventsMap });
+      };
+    }, [eventsMap]);
+
+    return (
       <div
-        ref={imgRef}
-        className={[
-          "flex flex-row relative min-h-48",
-          isMoving && "transition-transform duration-500",
-        ].join(" ")}
-        style={{ width: totalWidthPercent }}
+        className={clsx(
+          "overflow-hidden z-10 cursor-pointer",
+          wrapperClassName
+        )}
       >
-        {children}
+        <div
+          ref={imgRef}
+          className={clsx(
+            "flex flex-row relative min-h-48",
+            isMoving && "transition-transform duration-500",
+            carouselClassName
+          )}
+          style={{ width: totalWidthPercent }}
+        >
+          {children}
+        </div>
       </div>
-    </div>
-  );
-});
+    );
+  }
+);
