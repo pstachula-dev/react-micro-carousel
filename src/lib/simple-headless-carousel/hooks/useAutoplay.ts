@@ -1,6 +1,6 @@
-import { useEffect } from "react";
-import { useCarouselReducer } from "./useCarouselReducer";
-import type { CarouselContextProps } from "../context/CarouselContext";
+import { useEffect } from 'react';
+import { useCarouselReducer } from './useCarouselReducer';
+import type { CarouselContextProps } from '../context/CarouselContext';
 
 export const useAutoplay = (ctx: CarouselContextProps) => {
   const { dispatch } = useCarouselReducer();
@@ -8,16 +8,20 @@ export const useAutoplay = (ctx: CarouselContextProps) => {
   useEffect(() => {
     const { state } = ctx;
 
-    if (!state.autoPlay) return;
+    if (state.autoPlay) {
+      const intervalId = setInterval(() => {
+        if (state.currentIndex === state.total - 1) {
+          dispatch({ action: 'setCurrentIndex', value: 0 });
+        } else {
+          dispatch({ action: 'next' });
+        }
+      }, state.autoPlayDelay);
 
-    const intervalId = setInterval(() => {
-      if (state.currentIndex === state.total - 1) {
-        dispatch({ action: "setCurrentIndex", value: 0 });
-      } else {
-        dispatch({ action: "next" });
-      }
-    }, state.autoPlayDelay);
+      return () => {
+        clearInterval(intervalId);
+      };
+    }
 
-    return () => clearInterval(intervalId);
+    return undefined;
   }, [ctx, dispatch]);
 };

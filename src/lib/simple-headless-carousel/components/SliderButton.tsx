@@ -15,12 +15,12 @@ export type SliderButtonProps = {
  * @param {string} [props.className] - The additional CSS class for the button.
  * @return {JSX.Element} The rendered slider button component.
  */
-export const SliderButton = ({
+export function SliderButton({
   onClick,
   action,
   title,
   className,
-}: SliderButtonProps) => {
+}: SliderButtonProps) {
   return (
     <button
       className={className}
@@ -33,4 +33,4 @@ export const SliderButton = ({
       {title}
     </button>
   );
-};
+}

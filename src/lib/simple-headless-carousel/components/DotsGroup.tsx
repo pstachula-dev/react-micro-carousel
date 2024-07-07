@@ -1,7 +1,7 @@
-import { memo, useContext, useId } from "react";
-import { CarouselContext } from "../context/CarouselContext";
-import { Dot } from "./Dot";
-import { clsx } from "../services/clsx";
+import { memo, useContext, useId } from 'react';
+import { CarouselContext } from '../context/CarouselContext';
+import { Dot } from './Dot';
+import { clsx } from '../services/clsx';
 
 type DotsGroupProps = {
   className?: string;
@@ -19,7 +19,7 @@ export const DotsGroup = memo(({ className }: DotsGroupProps) => {
   const dotsLength = total / slidesVisible;
 
   return (
-    <div className={clsx("flex justify-center space-x-2", className)}>
+    <div className={clsx('flex justify-center space-x-2', className)}>
       {Array.from({ length: dotsLength }).map((_, idx) => (
         <Dot key={id + idx} index={idx * slidesVisible} />
       ))}

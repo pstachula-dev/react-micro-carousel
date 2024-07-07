@@ -1,5 +1,5 @@
-import { memo, type ReactNode } from "react";
-import { clsx } from "../services/clsx";
+import { memo, type ReactNode } from 'react';
+import { clsx } from '../services/clsx';
 
 type SlideProps = {
   children: ReactNode;
@@ -13,10 +13,8 @@ type SlideProps = {
  * @param {ReactNode} children - The content of the slide.
  * @param {string} className - Additional CSS classes for the slide.
  */
-export const Slide = memo(({ children, className }: SlideProps) => {
-  return (
-    <div className={clsx("relative w-full pointer-events-none", className)}>
+export const Slide = memo(({ children, className }: SlideProps) => (
+    <div className={clsx('pointer-events-none relative w-full', className)}>
       {children}
     </div>
-  );
-});
+  ));

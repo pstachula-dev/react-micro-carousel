@@ -1,6 +1,6 @@
-import { memo, useContext } from "react";
-import { CarouselContext } from "../context/CarouselContext";
-import { SliderButton, type SliderButtonProps } from "./SliderButton";
+import { memo, useContext } from 'react';
+import { CarouselContext } from '../context/CarouselContext';
+import { SliderButton, type SliderButtonProps } from './SliderButton';
 
 /**
  * A button component that allows the user to navigate to the next slide in the carousel.
@@ -20,10 +20,10 @@ export const NextButton = memo(
     return (
       <SliderButton
         className={className}
-        action={() => dispatch({ action: "next" })}
-        title={title || "Next"}
+        action={() => dispatch({ action: 'next' })}
+        title={title || 'Next'}
         onClick={onClick}
       />
     );
-  }
+  },
 );

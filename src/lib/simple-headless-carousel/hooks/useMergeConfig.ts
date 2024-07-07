@@ -1,9 +1,9 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 import {
   stateDefaults,
   type CarouselReduceDispatch,
   type CarouselState,
-} from "./useCarouselReducer";
+} from './useCarouselReducer';
 
 export const useMergeConfig = ({
   dispatch,
@@ -17,7 +17,7 @@ export const useMergeConfig = ({
 }: Partial<CarouselState> & { dispatch: CarouselReduceDispatch }) => {
   useEffect(() => {
     dispatch({
-      action: "setConfig",
+      action: 'setConfig',
       config: {
         autoPlayDelay: autoPlayDelay || stateDefaults.autoPlayDelay,
         slidesVisible: slidesVisible || stateDefaults.slidesVisible,

@@ -1,11 +1,11 @@
-import { useMemo, type ReactNode } from "react";
+import { useMemo, type ReactNode } from 'react';
 import {
   useCarouselReducer,
   type CarouselState,
-} from "../hooks/useCarouselReducer";
-import { CarouselContext } from "./CarouselContext";
-import { useAutoplay } from "../hooks/useAutoplay";
-import { useMergeConfig } from "../hooks/useMergeConfig";
+} from '../hooks/useCarouselReducer';
+import { CarouselContext } from './CarouselContext';
+import { useAutoplay } from '../hooks/useAutoplay';
+import { useMergeConfig } from '../hooks/useMergeConfig';
 
 /**
  * A provider component for the Carousel context.
@@ -19,12 +19,12 @@ import { useMergeConfig } from "../hooks/useMergeConfig";
  * @param {boolean} infinite - Whether the carousel should loop infinitely.
  * @param {number} step - The number of slides to move when navigating.
  */
-export const CarouselProvider = ({
+export function CarouselProvider({
   children,
   ...configProps
 }: {
   children: ReactNode;
-} & Partial<CarouselState>) => {
+} & Partial<CarouselState>) {
   const { dispatch, state } = useCarouselReducer();
   const ctx = useMemo(() => ({ dispatch, state }), [state, dispatch]);
 
@@ -34,4 +34,4 @@ export const CarouselProvider = ({
   return (
     <CarouselContext.Provider value={ctx}>{children}</CarouselContext.Provider>
   );
-};
+}

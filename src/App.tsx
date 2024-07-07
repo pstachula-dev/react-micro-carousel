@@ -1,17 +1,17 @@
-import { DotsGroup } from "./lib/simple-headless-carousel";
-import { CarouselProvider } from "./lib/simple-headless-carousel/context/CarouselProvider";
-import { Carousel } from "./lib/simple-headless-carousel/components/Carousel";
-import { NextButton } from "./lib/simple-headless-carousel/components/NextButton";
-import { PrevButton } from "./lib/simple-headless-carousel/components/PrevButton";
-import { Slide } from "./lib/simple-headless-carousel/components/Slide";
+import { DotsGroup } from './lib/simple-headless-carousel';
+import { CarouselProvider } from './lib/simple-headless-carousel/context/CarouselProvider';
+import { Carousel } from './lib/simple-headless-carousel/components/Carousel';
+import { NextButton } from './lib/simple-headless-carousel/components/NextButton';
+import { PrevButton } from './lib/simple-headless-carousel/components/PrevButton';
+import { Slide } from './lib/simple-headless-carousel/components/Slide';
 
-const Box = ({ index }: { index: number }) => {
+function Box({ index }: { index: number }) {
   return (
-    <div className="h-full z-0 flex justify-center items-center bg-gray-800 border-4 border-gray-900">
+    <div className="z-0 flex h-full items-center justify-center border-4 border-gray-900 bg-gray-800">
       {index}
     </div>
   );
-};
+}
 
 function App() {
   return (
@@ -21,7 +21,7 @@ function App() {
         width={500}
         autoPlay={false}
         slidesVisible={1}
-        infinite={true}
+        infinite
         step={1}
         total={4}
       >
@@ -40,7 +40,7 @@ function App() {
           </Slide>
         </Carousel>
 
-        <div className="flex justify-center mt-4">
+        <div className="mt-4 flex justify-center">
           <DotsGroup />
         </div>
 

@@ -1,7 +1,7 @@
-import { useReducer, type Dispatch } from "react";
-import { CarouselErrror } from "../services/CarouseError";
+import { useReducer, type Dispatch } from 'react';
+import { CarouselErrror } from '../services/CarouseError';
 
-type CarouselAction = "next" | "prev" | "setCurrentIndex" | "setConfig";
+type CarouselAction = 'next' | 'prev' | 'setCurrentIndex' | 'setConfig';
 
 export type DispatchOpts = {
   action: CarouselAction;
@@ -36,13 +36,13 @@ export const stateDefaults: CarouselState = {
 
 export const carouselReducer = (
   state: CarouselState,
-  { action, value, config }: DispatchOpts
+  { action, value, config }: DispatchOpts,
 ): CarouselState => {
   const { currentIndex, step, total, infinite } = state;
   const localStep = step || 1;
 
   switch (action) {
-    case "next": {
+    case 'next': {
       if (currentIndex + localStep >= total) {
         if (!infinite) return state;
 
@@ -58,7 +58,7 @@ export const carouselReducer = (
       };
     }
 
-    case "prev": {
+    case 'prev': {
       if (currentIndex - localStep < 0) {
         if (!infinite) return state;
 
@@ -74,9 +74,9 @@ export const carouselReducer = (
       };
     }
 
-    case "setCurrentIndex": {
+    case 'setCurrentIndex': {
       if (value === undefined || value < 0 || value >= total) {
-        throw new CarouselErrror("setCurrentIndex value out of bounds");
+        throw new CarouselErrror('setCurrentIndex value out of bounds');
       }
 
       return {
@@ -85,7 +85,7 @@ export const carouselReducer = (
       };
     }
 
-    case "setConfig": {
+    case 'setConfig': {
       return {
         ...state,
         ...config,

@@ -7,12 +7,12 @@ import {
   useRef,
   type ReactNode,
   useMemo,
-} from "react";
-import { CarouselContext } from "../context/CarouselContext";
-import { getSlideClientX } from "../services/getSliderClientX";
-import type { EventMap, SlideEvent } from "../services/types";
-import { manageEvents } from "../services/manageEvents";
-import { clsx } from "../services/clsx";
+} from 'react';
+import { CarouselContext } from '../context/CarouselContext';
+import { getSlideClientX } from '../services/getSliderClientX';
+import type { EventMap, SlideEvent } from '../services/types';
+import { manageEvents } from '../services/manageEvents';
+import { clsx } from '../services/clsx';
 
 const threashold = 0.25;
 
@@ -46,20 +46,18 @@ export const Carousel = memo(
     const totalWidth = (100 * total) / slidesVisible;
     const totalWidthPercent = `${totalWidth}%`;
 
-    const cancelWrongTarget = (event: SlideEvent) => {
-      return event.target !== imgRef.current;
-    };
+    const cancelWrongTarget = (event: SlideEvent) => event.target !== imgRef.current;
 
     const setCurrentIndex = useCallback(
       (value: number) => {
-        dispatch({ action: "setCurrentIndex", value });
+        dispatch({ action: 'setCurrentIndex', value });
       },
-      [dispatch]
+      [dispatch],
     );
 
     const setTranslateX = useCallback((x: number) => {
       animationRef.current = requestAnimationFrame(() => {
-        imgRef.current?.style.setProperty("transform", `translateX(${x}px)`);
+        imgRef.current?.style.setProperty('transform', `translateX(${x}px)`);
       });
     }, []);
 
@@ -95,7 +93,7 @@ export const Carousel = memo(
           };
         }
       },
-      [currentIndex, width, isMoving, setTranslateX]
+      [currentIndex, width, isMoving, setTranslateX],
     );
 
     const onMoveEnd = useCallback(
@@ -110,7 +108,7 @@ export const Carousel = memo(
 
         if (movePayload.current.clientX !== 0) {
           const steps = Math.ceil(
-            Math.abs(movePayload.current.clientX) / width
+            Math.abs(movePayload.current.clientX) / width,
           );
           const newIndex = movePayload.current.moveRight
             ? currentIndex - steps
@@ -127,7 +125,7 @@ export const Carousel = memo(
         setTranslateX(-width * finalIndex);
         setCurrentIndex(finalIndex);
       },
-      [setCurrentIndex, setTranslateX, currentIndex, infinite, total, width]
+      [setCurrentIndex, setTranslateX, currentIndex, infinite, total, width],
     );
 
     const eventsMap = useMemo(
@@ -139,7 +137,7 @@ export const Carousel = memo(
         touchstart: onMoveStart,
         touchend: onMoveEnd,
       }),
-      [onMove, onMoveEnd, onMoveStart]
+      [onMove, onMoveEnd, onMoveStart],
     );
 
     useEffect(() => {
@@ -147,10 +145,10 @@ export const Carousel = memo(
     }, [setTranslateX, currentIndex, width]);
 
     useEffect(() => {
-      manageEvents({ action: "add", eventsMap });
+      manageEvents({ action: 'add', eventsMap });
 
       return () => {
-        manageEvents({ action: "remove", eventsMap });
+        manageEvents({ action: 'remove', eventsMap });
       };
     }, [eventsMap]);
 
@@ -158,16 +156,16 @@ export const Carousel = memo(
       <div
         style={{ width }}
         className={clsx(
-          "overflow-hidden z-10 cursor-pointer",
-          wrapperClassName
+          'z-10 cursor-pointer overflow-hidden',
+          wrapperClassName,
         )}
       >
         <div
           ref={imgRef}
           className={clsx(
-            "flex flex-row relative min-h-48",
-            isMoving && "transition-transform duration-500",
-            carouselClassName
+            'relative flex min-h-48 flex-row',
+            isMoving && 'transition-transform duration-500',
+            carouselClassName,
           )}
           style={{ width: totalWidthPercent }}
         >
@@ -175,5 +173,5 @@ export const Carousel = memo(
         </div>
       </div>
     );
-  }
+  },
 );

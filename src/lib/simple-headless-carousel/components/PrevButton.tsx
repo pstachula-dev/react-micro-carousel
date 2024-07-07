@@ -1,6 +1,6 @@
-import { memo, useContext } from "react";
-import { CarouselContext } from "../context/CarouselContext";
-import { SliderButton, type SliderButtonProps } from "./SliderButton";
+import { memo, useContext } from 'react';
+import { CarouselContext } from '../context/CarouselContext';
+import { SliderButton, type SliderButtonProps } from './SliderButton';
 
 /**
  * A button component that allows the user to navigate to the prev slide in the carousel.
@@ -20,10 +20,10 @@ export const PrevButton = memo(
     return (
       <SliderButton
         className={className}
-        action={() => dispatch({ action: "prev" })}
-        title={title || "Prev"}
+        action={() => dispatch({ action: 'prev' })}
+        title={title || 'Prev'}
         onClick={onClick}
       />
     );
-  }
+  },
 );

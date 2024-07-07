@@ -1,10 +1,10 @@
 export type SlideEventUnion =
-  | "mousemove"
-  | "mousedown"
-  | "mouseup"
-  | "touchmove"
-  | "touchstart"
-  | "touchend";
+  | 'mousemove'
+  | 'mousedown'
+  | 'mouseup'
+  | 'touchmove'
+  | 'touchstart'
+  | 'touchend';
 
 export type SlideEvent = TouchEvent | MouseEvent;
 
