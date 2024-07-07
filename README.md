@@ -11,7 +11,7 @@
 ### How to use:
 
 ```
-<CarouselProvider width={500} total={3}>
+<CarouselProvider total={3}>
   <Carousel>
     <Slide>
       <Img />

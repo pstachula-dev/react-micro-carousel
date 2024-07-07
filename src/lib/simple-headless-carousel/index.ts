@@ -6,3 +6,4 @@ export * from './components/DotsGroup';
 export * from './components/NextButton';
 export * from './components/PrevButton';
 export * from './components/Slide';
+export * from './components/Counter';

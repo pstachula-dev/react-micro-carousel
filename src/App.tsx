@@ -4,6 +4,7 @@ import { Carousel } from './lib/simple-headless-carousel/components/Carousel';
 import { NextButton } from './lib/simple-headless-carousel/components/NextButton';
 import { PrevButton } from './lib/simple-headless-carousel/components/PrevButton';
 import { Slide } from './lib/simple-headless-carousel/components/Slide';
+import { Counter } from './lib/simple-headless-carousel/components/Counter';
 
 function Box({ index }: { index: number }) {
   return (
@@ -49,6 +50,11 @@ function App() {
 
           <div className="my-4">
             <DotsGroup />
+          </div>
+
+          <div className="my-4">
+            <span>Couner:</span>
+            <Counter />
           </div>
 
           <div className="mx-4 flex gap-4">

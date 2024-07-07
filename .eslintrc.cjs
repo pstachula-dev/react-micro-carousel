@@ -15,6 +15,7 @@ module.exports = {
     sourceType: 'module',
     project: ['./tsconfig.json'],
   },
+  include: ['src', 'tailwind.config.ts'],
   ignorePatterns: ['dist', 'vite.*.ts'],
   rules: {
     'react-refresh/only-export-components': [
