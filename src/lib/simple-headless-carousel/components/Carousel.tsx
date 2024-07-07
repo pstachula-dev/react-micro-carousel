@@ -46,7 +46,8 @@ export const Carousel = memo(
     const totalWidth = (100 * total) / slidesVisible;
     const totalWidthPercent = `${totalWidth}%`;
 
-    const cancelWrongTarget = (event: SlideEvent) => event.target !== imgRef.current;
+    const cancelWrongTarget = (event: SlideEvent) =>
+      event.target !== imgRef.current;
 
     const setCurrentIndex = useCallback(
       (value: number) => {

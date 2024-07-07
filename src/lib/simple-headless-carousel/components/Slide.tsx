@@ -14,7 +14,7 @@ type SlideProps = {
  * @param {string} className - Additional CSS classes for the slide.
  */
 export const Slide = memo(({ children, className }: SlideProps) => (
-    <div className={clsx('pointer-events-none relative w-full', className)}>
-      {children}
-    </div>
-  ));
+  <div className={clsx('pointer-events-none relative w-full', className)}>
+    {children}
+  </div>
+));
