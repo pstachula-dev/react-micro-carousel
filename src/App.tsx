@@ -21,16 +21,23 @@ function App() {
           autoPlayDelay={2000}
           autoPlay={false}
           slidesVisible={1}
+          lazy
           infinite
           step={1}
           total={4}
         >
           <Carousel>
             <Slide>
-              <Box index={0} />
+              <img
+                alt=""
+                src="https://cdn.brumly.pl/carsmarket/images/2024/5/clxarh1n9000hzfnpruix36ka/f030c788-4419-486e-b165-11d7f10766ee-1024x580.webp"
+              />
             </Slide>
             <Slide>
-              <Box index={1} />
+              <img
+                alt=""
+                src="https://cdn.brumly.pl/carsmarket/images/2024/5/clxar7na90000zfnp982l5a0o/232c7e10-36e9-4c5c-8515-3dc0f038f949-1024x580.webp"
+              />
             </Slide>
             <Slide>
               <Box index={2} />

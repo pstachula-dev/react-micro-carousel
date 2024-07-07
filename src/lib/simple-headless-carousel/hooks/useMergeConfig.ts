@@ -11,8 +11,8 @@ export const useMergeConfig = ({
   autoPlayDelay,
   slidesVisible,
   step,
+  lazy,
   infinite,
-  width,
   total,
 }: Partial<CarouselState> & { dispatch: CarouselReduceDispatch }) => {
   useEffect(() => {
@@ -24,7 +24,7 @@ export const useMergeConfig = ({
         autoPlay: autoPlay || stateDefaults.autoPlay,
         step: step || stateDefaults.step,
         infinite: infinite || stateDefaults.infinite,
-        width,
+        lazy: lazy || stateDefaults.lazy,
         total,
       },
     });
@@ -35,7 +35,7 @@ export const useMergeConfig = ({
     autoPlayDelay,
     slidesVisible,
     infinite,
-    width,
+    lazy,
     step,
   ]);
 };

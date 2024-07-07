@@ -18,6 +18,7 @@ export type CarouselState = {
   autoPlayDelay: number;
   autoPlay: boolean;
   infinite: boolean;
+  lazy: boolean;
 };
 
 export type CarouselReduceDispatch = Dispatch<DispatchOpts>;
@@ -30,6 +31,7 @@ export const stateDefaults: CarouselState = {
   slidesVisible: 1,
   autoPlay: false,
   infinite: false,
+  lazy: true,
 };
 
 export const carouselReducer = (
@@ -101,6 +103,7 @@ export const useCarouselReducer = (): {
 } => {
   const [state, dispatch] = useReducer(carouselReducer, {
     currentIndex: 0,
+    lazy: true,
   } as CarouselState);
 
   return { state, dispatch };

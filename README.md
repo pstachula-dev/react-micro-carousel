@@ -5,8 +5,8 @@
 - Full typescript support
 - Built in with Tailwind, but you can always customize the styles
 - Handling touch/mouse events
-- Lazy image loading (WIP)
-- Responsive support (WIP)
+- Lazy image loading
+- Responsive support
 
 ### How to use:
 
@@ -41,3 +41,4 @@
 - [ ] Add unit tests
 - [ ] Add examples
 - [x] Publish on NPM
+- [ ] Add counter element

@@ -16,6 +16,7 @@ import { clsx } from '../services/clsx';
 import { useResizeObserver } from '../hooks/useResizeObserver';
 
 const threashold = 0.25;
+const fullSize = 100;
 
 type CarouselProps = {
   children: ReactNode;
@@ -45,11 +46,12 @@ export const Carousel = memo(
 
     const { refWidth } = useResizeObserver(imgRef);
     const { total, slidesVisible, currentIndex, infinite } = state;
-    const totalWidth = (100 * total) / slidesVisible;
+    const totalWidth = (fullSize * total) / slidesVisible;
     const totalWidthPercent = `${totalWidth}%`;
     const width = (refWidth || 0) / total;
-    const cancelWrongTarget = (event: SlideEvent) =>
-      event.target !== imgRef.current;
+    const cancelWrongTarget = ({ target }: SlideEvent) => {
+      return target !== imgRef.current;
+    };
 
     const setCurrentIndex = useCallback(
       (value: number) => {
@@ -61,11 +63,11 @@ export const Carousel = memo(
     const setTranslateX = useCallback(
       (x: number) => {
         animationRef.current = requestAnimationFrame(() => {
-          const percent = (x * 100) / width / total;
+          const percentX = (x * fullSize) / width / total;
 
           imgRef.current?.style.setProperty(
             'transform',
-            `translateX(${percent}%)`,
+            `translateX(${percentX}%)`,
           );
         });
       },
