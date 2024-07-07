@@ -157,7 +157,7 @@ export const Carousel = memo(
       <div
         style={{ width }}
         className={clsx(
-          'z-10 cursor-pointer overflow-hidden',
+          'relative z-10 cursor-pointer overflow-hidden',
           wrapperClassName,
         )}
       >

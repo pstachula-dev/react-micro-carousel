@@ -19,7 +19,7 @@ export const DotsGroup = memo(({ className }: DotsGroupProps) => {
   const dotsLength = total / slidesVisible;
 
   return (
-    <div className={clsx('flex justify-center space-x-2', className)}>
+    <div className={clsx('flex space-x-2', className)}>
       {Array.from({ length: dotsLength }).map((_, idx) => (
         <Dot key={id + idx} index={idx * slidesVisible} />
       ))}

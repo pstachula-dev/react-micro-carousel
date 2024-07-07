@@ -1,7 +1,14 @@
 {
   "name": "react-simple-headless-carousel",
   "private": false,
-  "version": "0.0.8",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pstachula-dev/simple-headless-carousel.git"
+  },
+  "author": "Paweł Stachula",
+  "license": "MIT",
+  "homepage": "https://simple-headless-carousel.onrender.com/",
+  "version": "0.0.9",
   "sideEffects": false,
   "description": "React simple headless carousel",
   "type": "module",
@@ -15,7 +22,7 @@
     "lint": "eslint . --ext ts,tsx",
     "build:lib": "vite build -c vite.lib.config.ts",
     "build:css": "NODE_ENV=production tailwindcss -o dist/styles.min.css -m",
-    "npm:lib": "npm run build:lib && npm run build:css"
+    "build:npm": "npm run build:lib && LIB_MODE=lib npm run build:css"
   },
   "files": [
     "/dist"

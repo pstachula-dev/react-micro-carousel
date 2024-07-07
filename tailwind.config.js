@@ -5,7 +5,7 @@ export default {
     extend: {},
   },
   corePlugins: {
-    preflight: process.env.NODE_ENV === 'production' ? false : true,
+    preflight: process.env.LIB_MODE !== 'lib',
   },
   plugins: [],
 };

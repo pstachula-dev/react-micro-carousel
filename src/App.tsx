@@ -15,38 +15,42 @@ function Box({ index }: { index: number }) {
 
 function App() {
   return (
-    <div className="mx-auto mt-10 justify-center">
-      <CarouselProvider
-        autoPlayDelay={2000}
-        width={500}
-        autoPlay={false}
-        slidesVisible={1}
-        infinite
-        step={1}
-        total={4}
-      >
-        <Carousel>
-          <Slide>
-            <Box index={0} />
-          </Slide>
-          <Slide>
-            <Box index={1} />
-          </Slide>
-          <Slide>
-            <Box index={2} />
-          </Slide>
-          <Slide>
-            <Box index={3} />
-          </Slide>
-        </Carousel>
+    <div className="h-dvh w-full bg-gray-700">
+      <div className="mx-auto max-w-3xl pt-10">
+        <CarouselProvider
+          autoPlayDelay={2000}
+          width={500}
+          autoPlay={false}
+          slidesVisible={1}
+          infinite
+          step={1}
+          total={4}
+        >
+          <Carousel>
+            <Slide>
+              <Box index={0} />
+            </Slide>
+            <Slide>
+              <Box index={1} />
+            </Slide>
+            <Slide>
+              <Box index={2} />
+            </Slide>
+            <Slide>
+              <Box index={3} />
+            </Slide>
+          </Carousel>
 
-        <div className="mt-4 flex justify-center">
-          <DotsGroup />
-        </div>
+          <div className="my-4">
+            <DotsGroup />
+          </div>
 
-        <PrevButton />
-        <NextButton />
-      </CarouselProvider>
+          <div className="mx-4 flex gap-4">
+            <PrevButton />
+            <NextButton />
+          </div>
+        </CarouselProvider>
+      </div>
     </div>
   );
 }
