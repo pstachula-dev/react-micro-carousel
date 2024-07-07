@@ -21,37 +21,14 @@ import { useMergeConfig } from "../hooks/useMergeConfig";
  */
 export const CarouselProvider = ({
   children,
-  total,
-  width,
-  autoPlay,
-  autoPlayDelay,
-  slidesVisible,
-  infinite,
-  step,
+  ...configProps
 }: {
   children: ReactNode;
 } & Partial<CarouselState>) => {
   const { dispatch, state } = useCarouselReducer();
+  const ctx = useMemo(() => ({ dispatch, state }), [state, dispatch]);
 
-  const ctx = useMemo(
-    () => ({
-      dispatch,
-      state,
-    }),
-    [state, dispatch]
-  );
-
-  useMergeConfig({
-    dispatch,
-    total,
-    width,
-    autoPlay,
-    infinite,
-    autoPlayDelay,
-    slidesVisible,
-    step,
-  });
-
+  useMergeConfig({ dispatch, ...configProps });
   useAutoplay(ctx);
 
   return (

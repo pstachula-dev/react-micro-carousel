@@ -5,13 +5,13 @@
 ```
 <CarouselProvider width={500} total={3}>
   <Carousel>
-    <Slide index={0}>
+    <Slide>
       <Img />
     </Slide>
-    <Slide index={1}>
+    <Slide>
       <Img />
     </Slide>
-    <Slide index={2}>
+    <Slide>
       <Img />
     </Slide>
   </Carousel>

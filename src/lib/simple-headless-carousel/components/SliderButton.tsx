@@ -26,7 +26,7 @@ export const SliderButton = ({
       className={className}
       type="button"
       onClick={() => {
-        action();
+        action?.();
         onClick?.();
       }}
     >

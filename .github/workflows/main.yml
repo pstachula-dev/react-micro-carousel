@@ -1,0 +1,22 @@
+name: Main flow
+
+on:
+  push:
+    branches:
+      - "*"
+
+jobs:
+  linters:
+    name: Linters
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: "npm"
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run format:ci
+      - run: npm run tsc
+      - run: npm run build

@@ -1,12 +1,8 @@
 import { defineConfig } from "vite";
-import { libInjectCss } from "vite-plugin-lib-inject-css";
 import { resolve } from "path";
 import react from "@vitejs/plugin-react";
 import dts from "vite-plugin-dts";
 
-//dev.to/receter/how-to-create-a-react-component-library-using-vites-library-mode-4lma
-
-// https://vitejs.dev/config/
 export default defineConfig({
   build: {
     minify: true,
@@ -28,7 +24,6 @@ export default defineConfig({
   },
   plugins: [
     react(),
-    libInjectCss(),
     dts({
       include: ["src/lib"],
       rollupTypes: true,
