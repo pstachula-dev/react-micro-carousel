@@ -6,14 +6,6 @@ import { PrevButton } from './lib/simple-headless-carousel/components/PrevButton
 import { Slide } from './lib/simple-headless-carousel/components/Slide';
 import { Counter } from './lib/simple-headless-carousel/components/Counter';
 
-function Box({ index }: { index: number }) {
-  return (
-    <div className="z-0 flex h-full items-center justify-center border-4 border-gray-900 bg-gray-800">
-      {index}
-    </div>
-  );
-}
-
 function App() {
   return (
     <div className="h-dvh w-full bg-gray-700">
@@ -22,29 +14,26 @@ function App() {
           autoPlayDelay={2000}
           autoPlay={false}
           slidesVisible={1}
-          lazy
+          lazy={false}
           infinite
           step={1}
-          total={4}
+          total={5}
         >
           <Carousel>
             <Slide>
-              <img
-                alt=""
-                src="https://cdn.brumly.pl/carsmarket/images/2024/5/clxarh1n9000hzfnpruix36ka/f030c788-4419-486e-b165-11d7f10766ee-1024x580.webp"
-              />
+              <img alt="" src="/imgs/img1.jpg" />
             </Slide>
             <Slide>
-              <img
-                alt=""
-                src="https://cdn.brumly.pl/carsmarket/images/2024/5/clxar7na90000zfnp982l5a0o/232c7e10-36e9-4c5c-8515-3dc0f038f949-1024x580.webp"
-              />
+              <img alt="" src="/imgs/img2.jpg" />
             </Slide>
             <Slide>
-              <Box index={2} />
+              <img alt="" src="/imgs/img3.jpg" />
             </Slide>
             <Slide>
-              <Box index={3} />
+              <img alt="" src="/imgs/img4.jpg" />
+            </Slide>
+            <Slide>
+              <img alt="" src="/imgs/img5.jpg" />
             </Slide>
           </Carousel>
 

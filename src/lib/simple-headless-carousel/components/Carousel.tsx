@@ -15,7 +15,7 @@ import { manageEvents } from '../services/manageEvents';
 import { clsx } from '../services/clsx';
 import { useResizeObserver } from '../hooks/useResizeObserver';
 
-const threashold = 0.25;
+const threshold = 0.25;
 const fullSize = 100;
 
 type CarouselProps = {
@@ -93,7 +93,7 @@ export const Carousel = memo(
 
         const startPosX = movePayload.current.startX;
         const clientX = getSlideClientX(event);
-        const hasThreshold = Math.abs(startPosX - clientX) > width * threashold;
+        const hasThreshold = Math.abs(startPosX - clientX) > width * threshold;
         const xDiff = startPosX ? clientX - startPosX : 0;
         const stepsWidth = width * -currentIndex;
         setTranslateX(xDiff + stepsWidth);
@@ -168,14 +168,14 @@ export const Carousel = memo(
     return (
       <div
         className={clsx(
-          'relative z-10 w-full max-w-full cursor-pointer overflow-hidden',
+          'relative z-10 max-w-full cursor-pointer overflow-hidden',
           wrapperClassName,
         )}
       >
         <div
           ref={imgRef}
           className={clsx(
-            'relative flex min-h-48 flex-row',
+            'relative flex w-full flex-row',
             isMoving && 'transition-transform duration-500',
             carouselClassName,
           )}

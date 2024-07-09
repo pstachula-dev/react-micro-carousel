@@ -13,6 +13,9 @@ export type CarouselState = {
   currentIndex: number;
   total: number;
   // optional
+  threshold: number;
+  disableTouch: boolean;
+  visibleSlides: number;
   slidesVisible: number;
   step: number;
   autoPlayDelay: number;
@@ -27,8 +30,11 @@ export const stateDefaults: CarouselState = {
   currentIndex: 0,
   total: 0,
   step: 1,
+  visibleSlides: 1,
   autoPlayDelay: 2000,
   slidesVisible: 1,
+  threshold: 0.25,
+  disableTouch: false,
   autoPlay: false,
   infinite: false,
   lazy: true,

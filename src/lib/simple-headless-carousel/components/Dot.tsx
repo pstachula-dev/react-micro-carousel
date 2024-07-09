@@ -5,28 +5,34 @@ import { clsx } from '../services/clsx';
 type DotProps = {
   index: number;
   className?: string;
+  disabled?: boolean;
+  onClick?: (event: React.MouseEvent) => void;
 };
 
 /**
  * Dot component for the carousel.
  *
- * @param {number} props.index - The index of the dot.
- * @param {string} [props.className] - The class name for the dot.
+ * @param {number} index - The index of the dot.
+ * @param {string} className - The class name for the dot.
+ * @param {boolean} disabled - Whether the dot is disabled.
+ * @param {Function} onClick - The callback function to be called when the button is clicked.
  */
-export const Dot = memo(({ index, className }: DotProps) => {
+export const Dot = memo(({ index, disabled, onClick, className }: DotProps) => {
   const { dispatch, state } = useContext(CarouselContext);
-  const color = state.currentIndex === index ? 'bg-red-500' : 'bg-gray-500';
+  const color = state.currentIndex === index ? 'bg-black' : 'bg-white';
 
-  const handleClick = () => {
+  const handleClick = (event: React.MouseEvent) => {
     dispatch({ action: 'setCurrentIndex', value: index });
+    onClick?.(event);
   };
 
   return (
     <button
       type="button"
       aria-label="Dot icon"
+      disabled={disabled}
       onClick={handleClick}
-      className={clsx('h-2 w-2 rounded-full', color, className)}
+      className={clsx('size-3 rounded-full', color, className)}
     />
   );
 });
