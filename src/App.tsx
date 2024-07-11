@@ -1,10 +1,12 @@
-import { DotsGroup } from './lib/simple-headless-carousel';
-import { CarouselProvider } from './lib/simple-headless-carousel/context/CarouselProvider';
-import { Carousel } from './lib/simple-headless-carousel/components/Carousel';
-import { NextButton } from './lib/simple-headless-carousel/components/NextButton';
-import { PrevButton } from './lib/simple-headless-carousel/components/PrevButton';
-import { Slide } from './lib/simple-headless-carousel/components/Slide';
-import { Counter } from './lib/simple-headless-carousel/components/Counter';
+import {
+  Carousel,
+  CarouselProvider,
+  Counter,
+  DotsGroup,
+  NextButton,
+  PrevButton,
+  Slide,
+} from './lib/simple-headless-carousel';
 
 function App() {
   return (

@@ -1,6 +1,6 @@
-# Simple Headless Carousel React
+# React Simple Headless Carousel
 
-## Featues
+## Component features
 
 - Extremely small package size: 2kB gzipped
 - 0 external dependencies
@@ -12,7 +12,38 @@
 
 ## How to use:
 
+### If you are using Tailwind:
+
+`tailwind.config.ts`
+
+```js
+export default {
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-simple-headless-carousel/**/*.js",
+  ],
+} satisfies Config;
 ```
+
+### ...other way?
+
+```js
+import 'react-simple-headless-carousel/styles.min.css';
+```
+
+### Components markup:
+
+```js
+import {
+  Carousel,
+  CarouselProvider,
+  Counter,
+  DotsGroup,
+  NextButton,
+  PrevButton,
+  Slide,
+} from 'react-simple-headless-carousel';
+
 <CarouselProvider total={2}>
   <Carousel>
     <Slide>
@@ -33,6 +64,8 @@
 
 ### `<CarouselProvider />`
 
+Component is used to initialize the carousel context with configuration options and wrap the other components.
+
 | Prop          | Type    | Default | Required |
 | ------------- | ------- | ------- | -------- |
 | total         | number  | 0       | Yes      |
@@ -47,13 +80,17 @@
 
 ### `<Carousel />`
 
+A carousel that wraps the slides and provides the core functionality, such as scrolling to the next or previous slide.
+
 | Prop              | Type      | Default | Required |
 | ----------------- | --------- | ------- | -------- |
 | children          | ReactNode |         | Yes      |
 | wrapperClassName  | string    |         | No       |
 | carouselClassName | string    |         | No       |
 
-### `<Carousel />`
+### `<Slide />`
+
+A single slide in a carousel.
 
 | Prop      | Type      | Default | Required |
 | --------- | --------- | ------- | -------- |
@@ -61,6 +98,8 @@
 | className | string    |         | No       |
 
 ### `<Dot />`
+
+A single dot.
 
 | Prop          | Type     | Default | Required |
 | ------------- | -------- | ------- | -------- |
@@ -72,6 +111,9 @@
 | onClick       | Function |         | No       |
 
 ### `<DotsGroup />`
+
+A component that renders a group of dots, representing the slides in the carousel.
+It provides auto generated dots for the carousel.
 
 | Prop          | Type     | Default | Required |
 | ------------- | -------- | ------- | -------- |
