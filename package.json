@@ -11,6 +11,17 @@
   "version": "0.0.11",
   "sideEffects": false,
   "description": "React simple headless carousel",
+  "keywords": [
+    "react",
+    "reactjs",
+    "react-carousel",
+    "slider",
+    "tailwind",
+    "carousel",
+    "headless",
+    "simple",
+    "component"
+  ],
   "type": "module",
   "scripts": {
     "dev": "vite",

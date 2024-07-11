@@ -5,8 +5,8 @@ import {
   useEffect,
   useCallback,
   useRef,
-  type ReactNode,
   useMemo,
+  type ReactNode,
 } from 'react';
 import { CarouselContext } from '../context/CarouselContext';
 import { getSlideClientX } from '../services/getSliderClientX';
@@ -63,7 +63,7 @@ export const Carousel = memo(
     const setTranslateX = useCallback(
       (x: number) => {
         animationRef.current = requestAnimationFrame(() => {
-          const percentX = (x * fullSize) / width / total;
+          const percentX = (x * fullSize) / width / total / slidesVisible;
 
           imgRef.current?.style.setProperty(
             'transform',
@@ -71,12 +71,12 @@ export const Carousel = memo(
           );
         });
       },
-      [width, total],
+      [width, total, slidesVisible],
     );
 
     const onMoveStart = useCallback((event: SlideEvent) => {
       if (cancelWrongTarget(event)) return;
-      // Important due to blocking onMouseMove
+      // Important due to blocking onMouseMoev
       event.preventDefault();
 
       setIsMoving(false);
@@ -89,7 +89,7 @@ export const Carousel = memo(
 
     const onMove = useCallback(
       (event: SlideEvent) => {
-        if (!imgRef.current || isMoving || cancelWrongTarget(event)) return;
+        if (!imgRef.current || isMoving) return;
 
         const startPosX = movePayload.current.startX;
         const clientX = getSlideClientX(event);
@@ -109,37 +109,30 @@ export const Carousel = memo(
       [currentIndex, width, isMoving, setTranslateX],
     );
 
-    const onMoveEnd = useCallback(
-      (event: SlideEvent) => {
-        if (cancelWrongTarget(event)) return;
+    const onMoveEnd = useCallback(() => {
+      if (animationRef?.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
 
-        if (animationRef?.current) {
-          cancelAnimationFrame(animationRef.current);
+      let finalIndex = currentIndex;
+
+      if (movePayload.current.clientX !== 0) {
+        const steps = Math.ceil(Math.abs(movePayload.current.clientX) / width);
+        const newIndex = movePayload.current.moveRight
+          ? currentIndex - steps
+          : currentIndex + steps;
+
+        if (infinite && (newIndex < 0 || newIndex >= total)) {
+          finalIndex = newIndex > 0 ? 0 : total - 1;
+        } else {
+          finalIndex = newIndex;
         }
+      }
 
-        let finalIndex = currentIndex;
-
-        if (movePayload.current.clientX !== 0) {
-          const steps = Math.ceil(
-            Math.abs(movePayload.current.clientX) / width,
-          );
-          const newIndex = movePayload.current.moveRight
-            ? currentIndex - steps
-            : currentIndex + steps;
-
-          if (infinite && (newIndex < 0 || newIndex >= total)) {
-            finalIndex = newIndex > 0 ? 0 : total - 1;
-          } else {
-            finalIndex = newIndex;
-          }
-        }
-
-        setIsMoving(true);
-        setTranslateX(-width * finalIndex);
-        setCurrentIndex(finalIndex);
-      },
-      [setCurrentIndex, setTranslateX, currentIndex, infinite, total, width],
-    );
+      setIsMoving(true);
+      setTranslateX(-width * finalIndex);
+      setCurrentIndex(finalIndex);
+    }, [setCurrentIndex, setTranslateX, currentIndex, infinite, total, width]);
 
     const eventsMap = useMemo(
       (): EventMap => ({

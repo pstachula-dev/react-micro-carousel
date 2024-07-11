@@ -10,9 +10,9 @@ export type DispatchOpts = {
 };
 
 export type CarouselState = {
-  currentIndex: number;
   total: number;
   // optional
+  currentIndex: number;
   threshold: number;
   disableTouch: boolean;
   visibleSlides: number;
