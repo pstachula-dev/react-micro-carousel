@@ -2,7 +2,9 @@
 
 ## Component features
 
-- Extremely small package size: 2kB gzipped
+- Extremely small package size (gzipped):
+  - Javascript: 2.5kB
+  - CSS: 1.5kB
 - 0 external dependencies
 - Full typescript support
 - Built in with Tailwind, but you can always customize the styles
