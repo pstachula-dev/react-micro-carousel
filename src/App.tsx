@@ -8,8 +8,10 @@ import { Counter } from './lib/simple-headless-carousel/components/Counter';
 
 function App() {
   return (
-    <div className="h-dvh w-full bg-gray-800">
-      <div className="mx-auto flex max-w-3xl flex-col justify-center pt-10">
+    <div className="h-dvh w-full bg-gray-800 font-bold  text-white">
+      <div className="mx-auto flex max-w-3xl flex-col gap-6 pt-10 text-center">
+        <h1 className="my-6 text-3xl">React Simple Headless Carousel Demo</h1>
+
         <CarouselProvider
           autoPlayDelay={2000}
           autoPlay={false}
@@ -37,15 +39,21 @@ function App() {
             </Slide>
           </Carousel>
 
-          <DotsGroup />
+          <div className="flex justify-center">
+            <DotsGroup />
+          </div>
 
-          <div className="my-4">
+          <div className="flex justify-center gap-2">
             <span>Counter:</span>
             <Counter />
           </div>
-          <div className="mx-4 flex gap-4">
-            <PrevButton />
-            <NextButton />
+          <div className="flex justify-center gap-4">
+            <PrevButton className="rounded-md border px-4 py-1">
+              Prev
+            </PrevButton>
+            <NextButton className="rounded-md border px-4 py-1">
+              Next
+            </NextButton>
           </div>
         </CarouselProvider>
       </div>

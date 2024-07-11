@@ -1,5 +1,5 @@
 import { useReducer, type Dispatch } from 'react';
-import { CarouselErrror } from '../services/CarouseError';
+import { CarouselError } from '../services/CarouseError';
 
 type CarouselAction = 'next' | 'prev' | 'setCurrentIndex' | 'setConfig';
 
@@ -15,7 +15,6 @@ export type CarouselState = {
   currentIndex: number;
   threshold: number;
   disableTouch: boolean;
-  visibleSlides: number;
   slidesVisible: number;
   step: number;
   autoPlayDelay: number;
@@ -30,7 +29,6 @@ export const stateDefaults: CarouselState = {
   currentIndex: 0,
   total: 0,
   step: 1,
-  visibleSlides: 1,
   autoPlayDelay: 2000,
   slidesVisible: 1,
   threshold: 0.25,
@@ -82,7 +80,7 @@ export const carouselReducer = (
 
     case 'setCurrentIndex': {
       if (value === undefined || value < 0 || value >= total) {
-        throw new CarouselErrror('setCurrentIndex value out of bounds');
+        throw new CarouselError('setCurrentIndex value out of bounds');
       }
 
       return {

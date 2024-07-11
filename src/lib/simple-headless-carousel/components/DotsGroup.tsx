@@ -34,7 +34,7 @@ export const DotsGroup = memo(
     const dotsLength = total / slidesVisible;
 
     return (
-      <div className={clsx('flex space-x-2', className)}>
+      <div className={clsx('flex gap-2', className)}>
         {Array.from({ length: dotsLength }).map((_, idx) => (
           <Dot
             className={dotClassName}

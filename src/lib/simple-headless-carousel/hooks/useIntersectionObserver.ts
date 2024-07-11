@@ -19,9 +19,9 @@ export const useIntersectionObserver = <T extends HTMLElement>({
     if (!ref.current) return;
 
     const handleObserver = (entries: IntersectionObserverEntry[]) => {
-      for (const e of entries) {
-        if (e.target === ref.current) {
-          setEntry(e);
+      for (const sectionEntry of entries) {
+        if (sectionEntry.target === ref.current) {
+          setEntry(sectionEntry);
         }
       }
     };

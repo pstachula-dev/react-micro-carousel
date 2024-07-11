@@ -15,14 +15,13 @@ import { manageEvents } from '../services/manageEvents';
 import { clsx } from '../services/clsx';
 import { useResizeObserver } from '../hooks/useResizeObserver';
 
-const threshold = 0.25;
-const fullSize = 100;
-
 type CarouselProps = {
   children: ReactNode;
   wrapperClassName?: string;
   carouselClassName?: string;
 };
+
+const fullSize = 100;
 
 /**
  * A simple headless carousel
@@ -38,14 +37,21 @@ export const Carousel = memo(
 
     const imgRef = useRef<HTMLDivElement>(null);
     const animationRef = useRef<number | null>(null);
+    const { refWidth } = useResizeObserver(imgRef);
     const movePayload = useRef({
       startX: 0,
       clientX: 0,
       moveRight: true,
     });
 
-    const { refWidth } = useResizeObserver(imgRef);
-    const { total, slidesVisible, currentIndex, infinite } = state;
+    const {
+      total,
+      slidesVisible,
+      currentIndex,
+      infinite,
+      threshold,
+      disableTouch,
+    } = state;
     const totalWidth = (fullSize * total) / slidesVisible;
     const totalWidthPercent = `${totalWidth}%`;
     const width = (refWidth || 0) / total;
@@ -76,7 +82,7 @@ export const Carousel = memo(
 
     const onMoveStart = useCallback((event: SlideEvent) => {
       if (cancelWrongTarget(event)) return;
-      // Important due to blocking onMouseMoev
+      // Important due to blocking onMouseMove
       event.preventDefault();
 
       setIsMoving(false);
@@ -95,8 +101,8 @@ export const Carousel = memo(
         const clientX = getSlideClientX(event);
         const hasThreshold = Math.abs(startPosX - clientX) > width * threshold;
         const xDiff = startPosX ? clientX - startPosX : 0;
-        const stepsWidth = width * -currentIndex;
-        setTranslateX(xDiff + stepsWidth);
+        const stepsWidth = width * currentIndex;
+        setTranslateX(xDiff - stepsWidth);
 
         if (hasThreshold) {
           movePayload.current = {
@@ -106,7 +112,7 @@ export const Carousel = memo(
           };
         }
       },
-      [currentIndex, width, isMoving, setTranslateX],
+      [currentIndex, width, isMoving, setTranslateX, threshold],
     );
 
     const onMoveEnd = useCallback(() => {
@@ -157,12 +163,14 @@ export const Carousel = memo(
     }, [setTranslateX, currentIndex, width]);
 
     useEffect(() => {
+      if (disableTouch) return;
+
       manageEvents({ action: 'add', eventsMap });
 
       return () => {
         manageEvents({ action: 'remove', eventsMap });
       };
-    }, [eventsMap]);
+    }, [eventsMap, disableTouch]);
 
     return (
       <div

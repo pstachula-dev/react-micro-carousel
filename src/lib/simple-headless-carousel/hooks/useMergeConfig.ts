@@ -10,6 +10,8 @@ export const useMergeConfig = ({
   autoPlay,
   autoPlayDelay,
   slidesVisible,
+  threshold,
+  disableTouch,
   step,
   lazy,
   infinite,
@@ -25,6 +27,8 @@ export const useMergeConfig = ({
         step: step || stateDefaults.step,
         infinite: infinite || stateDefaults.infinite,
         lazy: lazy || stateDefaults.lazy,
+        threshold: threshold || stateDefaults.threshold,
+        disableTouch: disableTouch || stateDefaults.disableTouch,
         total,
       },
     });
@@ -33,9 +37,11 @@ export const useMergeConfig = ({
     total,
     autoPlay,
     autoPlayDelay,
+    threshold,
     slidesVisible,
     infinite,
     lazy,
     step,
+    disableTouch,
   ]);
 };

@@ -35,7 +35,9 @@
     "build:css": "NODE_ENV=production tailwindcss -o dist/styles.min.css -m",
     "build:npm": "npm run build:lib && LIB_MODE=lib npm run build:css"
   },
-  "files": ["/dist"],
+  "files": [
+    "/dist"
+  ],
   "main": "dist/simple-headless-carousel.umd.cjs",
   "module": "dist/simple-headless-carousel.js",
   "types": "dist/index.d.ts",

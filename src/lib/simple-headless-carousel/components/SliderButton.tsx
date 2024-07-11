@@ -1,5 +1,7 @@
+import type { ReactNode } from 'react';
+
 export type SliderButtonProps = {
-  title?: string;
+  children: ReactNode;
   action?: () => void;
   onClick?: () => void;
   className?: string;
@@ -8,17 +10,16 @@ export type SliderButtonProps = {
 /**
  * Renders a slider button component.
  *
- * @param {Object} props - The properties for the slider button.
+ * @param {ReactNode} children - The child components to be wrapped.
  * @param {Function} props.onClick - The click event handler.
  * @param {Function} props.action - The action to be performed when the button is clicked.
- * @param {string} props.title - The title to be displayed on the button.
  * @param {string} [props.className] - The additional CSS class for the button.
  * @return {JSX.Element} The rendered slider button component.
  */
 export function SliderButton({
   onClick,
   action,
-  title,
+  children,
   className,
 }: SliderButtonProps) {
   return (
@@ -30,7 +31,7 @@ export function SliderButton({
         onClick?.();
       }}
     >
-      {title}
+      {children}
     </button>
   );
 }

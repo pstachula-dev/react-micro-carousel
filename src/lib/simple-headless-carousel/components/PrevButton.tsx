@@ -9,21 +9,23 @@ import { SliderButton, type SliderButtonProps } from './SliderButton';
  * @example
  * <PrevButton onClick={handlePrevButtonClick} className="custom-class" title="Skip to prev slide" />
  *
+ * @param {ReactNode} children - The child components to be wrapped.
  * @param {Function} onClick - The callback function to be called when the button is clicked.
  * @param {string} className - An optional class name to be applied to the button.
  * @param {string} title - An optional title to be displayed on the button.
  */
 export const PrevButton = memo(
-  ({ onClick, className, title }: SliderButtonProps) => {
+  ({ onClick, className, children }: SliderButtonProps) => {
     const { dispatch } = useContext(CarouselContext);
 
     return (
       <SliderButton
         className={className}
         action={() => dispatch({ action: 'prev' })}
-        title={title || 'Prev'}
         onClick={onClick}
-      />
+      >
+        {children}
+      </SliderButton>
     );
   },
 );
