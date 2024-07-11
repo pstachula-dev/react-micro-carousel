@@ -110,6 +110,8 @@ export const Carousel = memo(
     );
 
     const onMoveEnd = useCallback(() => {
+      if (!movePayload.current.startX) return;
+
       if (animationRef?.current) {
         cancelAnimationFrame(animationRef.current);
       }
@@ -129,6 +131,10 @@ export const Carousel = memo(
         }
       }
 
+      movePayload.current = {
+        ...movePayload.current,
+        clientX: 0,
+      };
       setIsMoving(true);
       setTranslateX(-width * finalIndex);
       setCurrentIndex(finalIndex);
