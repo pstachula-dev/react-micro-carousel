@@ -35,7 +35,7 @@ export const stateDefaults: CarouselState = {
   disableTouch: false,
   autoPlay: false,
   infinite: false,
-  lazy: true,
+  lazy: false,
 };
 
 export const carouselReducer = (
@@ -107,7 +107,6 @@ export const useCarouselReducer = (): {
 } => {
   const [state, dispatch] = useReducer(carouselReducer, {
     currentIndex: 0,
-    lazy: true,
   } as CarouselState);
 
   return { state, dispatch };

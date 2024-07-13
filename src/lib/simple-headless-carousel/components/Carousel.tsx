@@ -38,7 +38,7 @@ export const Carousel = memo(
     const imgRef = useRef<HTMLDivElement>(null);
     const animationRef = useRef<number | null>(null);
     const { refWidth } = useResizeObserver(imgRef);
-    const movePayload = useRef({
+    const moveCache = useRef({
       startX: 0,
       clientX: 0,
       moveRight: true,
@@ -86,7 +86,7 @@ export const Carousel = memo(
       event.preventDefault();
 
       setIsMoving(false);
-      movePayload.current = {
+      moveCache.current = {
         clientX: 0,
         startX: getSlideClientX(event),
         moveRight: true,
@@ -97,7 +97,7 @@ export const Carousel = memo(
       (event: SlideEvent) => {
         if (!imgRef.current || isMoving) return;
 
-        const startPosX = movePayload.current.startX;
+        const startPosX = moveCache.current.startX;
         const clientX = getSlideClientX(event);
         const hasThreshold = Math.abs(startPosX - clientX) > width * threshold;
         const xDiff = startPosX ? clientX - startPosX : 0;
@@ -105,8 +105,8 @@ export const Carousel = memo(
         setTranslateX(xDiff - stepsWidth);
 
         if (hasThreshold) {
-          movePayload.current = {
-            ...movePayload.current,
+          moveCache.current = {
+            ...moveCache.current,
             clientX: xDiff,
             moveRight: xDiff > 0,
           };
@@ -116,7 +116,7 @@ export const Carousel = memo(
     );
 
     const onMoveEnd = useCallback(() => {
-      if (!movePayload.current.startX) return;
+      if (!moveCache.current.startX) return;
 
       if (animationRef?.current) {
         cancelAnimationFrame(animationRef.current);
@@ -124,9 +124,9 @@ export const Carousel = memo(
 
       let finalIndex = currentIndex;
 
-      if (movePayload.current.clientX !== 0) {
-        const steps = Math.ceil(Math.abs(movePayload.current.clientX) / width);
-        const newIndex = movePayload.current.moveRight
+      if (moveCache.current.clientX !== 0) {
+        const steps = Math.ceil(Math.abs(moveCache.current.clientX) / width);
+        const newIndex = moveCache.current.moveRight
           ? currentIndex - steps
           : currentIndex + steps;
 
@@ -137,8 +137,8 @@ export const Carousel = memo(
         }
       }
 
-      movePayload.current = {
-        ...movePayload.current,
+      moveCache.current = {
+        ...moveCache.current,
         clientX: 0,
       };
       setIsMoving(true);

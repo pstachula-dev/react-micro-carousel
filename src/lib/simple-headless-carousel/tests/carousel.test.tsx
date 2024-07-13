@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest';
-import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
+import { render, screen } from '@testing-library/react';
 import { CarouselProvider, Carousel, Slide } from '../index';
 
 const setup = () => {
@@ -8,7 +8,7 @@ const setup = () => {
     <CarouselProvider lazy={false} total={1}>
       <p>Title</p>
       <Carousel>
-        <Slide>1</Slide>
+        <Slide index={0}>1</Slide>
       </Carousel>
     </CarouselProvider>,
   );

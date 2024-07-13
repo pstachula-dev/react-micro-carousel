@@ -5,6 +5,8 @@ import {
   type CarouselState,
 } from './useCarouselReducer';
 
+const isDefined = <T>(prop: T) => prop !== undefined;
+
 export const useMergeConfig = ({
   dispatch,
   autoPlay,
@@ -21,14 +23,20 @@ export const useMergeConfig = ({
     dispatch({
       action: 'setConfig',
       config: {
-        autoPlayDelay: autoPlayDelay || stateDefaults.autoPlayDelay,
-        slidesVisible: slidesVisible || stateDefaults.slidesVisible,
-        autoPlay: autoPlay || stateDefaults.autoPlay,
-        step: step || stateDefaults.step,
-        infinite: infinite || stateDefaults.infinite,
-        lazy: lazy || stateDefaults.lazy,
-        threshold: threshold || stateDefaults.threshold,
-        disableTouch: disableTouch || stateDefaults.disableTouch,
+        autoPlayDelay: isDefined(autoPlayDelay)
+          ? autoPlayDelay
+          : stateDefaults.autoPlayDelay,
+        slidesVisible: isDefined(slidesVisible)
+          ? slidesVisible
+          : stateDefaults.slidesVisible,
+        autoPlay: isDefined(autoPlay) ? autoPlay : stateDefaults.autoPlay,
+        step: isDefined(step) ? step : stateDefaults.step,
+        infinite: isDefined(infinite) ? infinite : stateDefaults.infinite,
+        lazy: isDefined(lazy) ? lazy : stateDefaults.lazy,
+        threshold: isDefined(threshold) ? threshold : stateDefaults.threshold,
+        disableTouch: isDefined(disableTouch)
+          ? disableTouch
+          : stateDefaults.disableTouch,
         total,
       },
     });

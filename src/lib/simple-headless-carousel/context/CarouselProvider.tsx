@@ -26,7 +26,10 @@ export function CarouselProvider({
   children: ReactNode;
 } & Partial<CarouselState>) {
   const { dispatch, state } = useCarouselReducer();
-  const ctx = useMemo(() => ({ dispatch, state }), [state, dispatch]);
+  const ctx = useMemo(
+    () => ({ dispatch, state, initConfig: configProps }),
+    [state, dispatch, configProps],
+  );
 
   useMergeConfig({ dispatch, ...configProps });
   useAutoplay(ctx);

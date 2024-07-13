@@ -18,25 +18,25 @@ function App() {
           autoPlayDelay={2000}
           autoPlay={false}
           slidesVisible={1}
-          lazy={false}
+          lazy
           infinite
           step={1}
           total={5}
         >
           <Carousel>
-            <Slide>
+            <Slide index={0}>
               <img alt="" src="/imgs/img1.jpg" />
             </Slide>
-            <Slide>
+            <Slide index={1}>
               <img alt="" src="/imgs/img2.jpg" />
             </Slide>
-            <Slide>
+            <Slide index={2}>
               <img alt="" src="/imgs/img3.jpg" />
             </Slide>
-            <Slide>
+            <Slide index={3}>
               <img alt="" src="/imgs/img4.jpg" />
             </Slide>
-            <Slide>
+            <Slide index={4}>
               <img alt="" src="/imgs/img5.jpg" />
             </Slide>
           </Carousel>
