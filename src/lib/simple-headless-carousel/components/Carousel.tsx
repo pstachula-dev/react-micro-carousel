@@ -50,6 +50,7 @@ export const Carousel = memo(
       currentIndex,
       infinite,
       threshold,
+      step,
       disableTouch,
     } = state;
     const totalWidth = (fullSize * total) / slidesVisible;
@@ -60,6 +61,9 @@ export const Carousel = memo(
     };
 
     const setCurrentIndex = useCallback(
+    
+    
+    
       (value: number) => {
         dispatch({ action: 'setCurrentIndex', value });
       },
@@ -67,9 +71,11 @@ export const Carousel = memo(
     );
 
     const setTranslateX = useCallback(
-      (x: number) => {
+      (diffX: number) => {
+        // diffX = X%
+        // fullSize = 100%(fullSize)
         animationRef.current = requestAnimationFrame(() => {
-          const percentX = (x * fullSize) / width / total / slidesVisible;
+          const percentX = (diffX * fullSize) / width / total;
 
           imgRef.current?.style.setProperty(
             'transform',
@@ -77,7 +83,7 @@ export const Carousel = memo(
           );
         });
       },
-      [width, total, slidesVisible],
+      [width, total],
     );
 
     const onMoveStart = useCallback((event: SlideEvent) => {
@@ -125,7 +131,10 @@ export const Carousel = memo(
       let finalIndex = currentIndex;
 
       if (moveCache.current.clientX !== 0) {
-        const steps = Math.ceil(Math.abs(moveCache.current.clientX) / width);
+        const dragSteps = Math.ceil(
+          Math.abs(moveCache.current.clientX) / width,
+        );
+        const steps = dragSteps > step ? dragSteps : step;
         const newIndex = moveCache.current.moveRight
           ? currentIndex - steps
           : currentIndex + steps;
@@ -144,7 +153,15 @@ export const Carousel = memo(
       setIsMoving(true);
       setTranslateX(-width * finalIndex);
       setCurrentIndex(finalIndex);
-    }, [setCurrentIndex, setTranslateX, currentIndex, infinite, total, width]);
+    }, [
+      setCurrentIndex,
+      setTranslateX,
+      currentIndex,
+      infinite,
+      total,
+      step,
+      width,
+    ]);
 
     const eventsMap = useMemo(
       (): EventMap => ({

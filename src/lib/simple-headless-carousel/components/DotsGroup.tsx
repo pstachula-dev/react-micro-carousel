@@ -30,19 +30,18 @@ export const DotsGroup = memo(
   }: DotsGroupProps) => {
     const id = useId();
     const { state } = useContext(CarouselContext);
-    const { total, slidesVisible } = state;
-    const dotsLength = total / slidesVisible;
+    const { total } = state;
 
     return (
       <div className={clsx('flex gap-2', className)}>
-        {Array.from({ length: dotsLength }).map((_, idx) => (
+        {Array.from({ length: total }).map((_, idx) => (
           <Dot
             className={dotClassName}
             colorActive={colorActive}
             colorInactive={colorInactive}
             onClick={onClick}
             key={id + idx}
-            index={idx * slidesVisible}
+            index={idx}
           />
         ))}
       </div>

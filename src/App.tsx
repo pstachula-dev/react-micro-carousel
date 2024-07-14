@@ -17,10 +17,9 @@ function App() {
         <CarouselProvider
           autoPlayDelay={2000}
           autoPlay={false}
-          slidesVisible={1}
-          lazy
+          slidesVisible={2}
           infinite
-          step={1}
+          step={2}
           total={5}
         >
           <Carousel>
