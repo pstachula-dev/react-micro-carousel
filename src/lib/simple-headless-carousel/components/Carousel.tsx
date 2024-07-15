@@ -134,8 +134,12 @@ export const Carousel = memo(
           ? currentIndex - steps
           : currentIndex + steps;
 
-        if (infinite && (newIndex < 0 || newIndex >= total)) {
-          finalIndex = newIndex > 0 ? 0 : total - 1;
+        if (newIndex < 0 || newIndex >= total) {
+          if (infinite) {
+            finalIndex = newIndex > 0 ? 0 : total - 1;
+          } else {
+            finalIndex = currentIndex;
+          }
         } else {
           finalIndex = newIndex;
         }

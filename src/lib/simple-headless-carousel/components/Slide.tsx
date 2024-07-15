@@ -27,7 +27,7 @@ export const Slide = memo(({ children, index, className }: SlideProps) => {
   });
 
   const { lazy } = initConfig;
-  const { currentIndex } = state;
+  const { currentIndex, slidesVisible } = state;
 
   if (!isVisible.current && entry?.isIntersecting) {
     isVisible.current = entry.isIntersecting;
@@ -35,12 +35,18 @@ export const Slide = memo(({ children, index, className }: SlideProps) => {
 
   const showLazy = lazy ? isVisible.current : true;
   const showSlide = currentIndex === index || showLazy;
+  const isGreater = index >= currentIndex;
+  const isLess = index < currentIndex + slidesVisible;
+  const isSelected = isGreater && isLess;
 
   return (
     <div
-      ref={intersectionRef}
+      role="row"
       className={clsx('pointer-events-none relative w-full', className)}
+      ref={intersectionRef}
       data-index={index}
+      data-testid={`slide-${index}`}
+      aria-selected={isSelected}
     >
       {showSlide && children}
     </div>
