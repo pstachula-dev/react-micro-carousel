@@ -61,9 +61,6 @@ export const Carousel = memo(
     };
 
     const setCurrentIndex = useCallback(
-    
-    
-    
       (value: number) => {
         dispatch({ action: 'setCurrentIndex', value });
       },
@@ -72,8 +69,6 @@ export const Carousel = memo(
 
     const setTranslateX = useCallback(
       (diffX: number) => {
-        // diffX = X%
-        // fullSize = 100%(fullSize)
         animationRef.current = requestAnimationFrame(() => {
           const percentX = (diffX * fullSize) / width / total;
 
