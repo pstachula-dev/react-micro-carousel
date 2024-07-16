@@ -150,11 +150,11 @@ It provides auto generated dots for the carousel.
 ### TODO:
 
 - [x] Add beta implementation
-- [ ] Add extra option props
 - [x] Add stable version
 - [x] Setup CI
 - [x] DX improvments prettier/eslint
 - [x] Add docs
+- [ ] Context initial props refactoring
 - [ ] Add unit tests
 - [ ] Add examples
 - [x] Publish on NPM

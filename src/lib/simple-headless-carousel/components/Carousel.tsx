@@ -179,7 +179,7 @@ export const Carousel = memo(
     }, [setTranslateX, currentIndex, width]);
 
     useEffect(() => {
-      if (disableTouch) return;
+      if (disableTouch === undefined || disableTouch) return;
 
       manageEvents({ action: 'add', eventsMap });
 
