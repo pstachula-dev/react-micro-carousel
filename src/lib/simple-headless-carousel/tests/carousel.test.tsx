@@ -190,7 +190,7 @@ describe('Check autoPlay logic', () => {
     vi.restoreAllMocks();
   });
 
-  it.only('Should start auto play', async () => {
+  it('Should start auto play', async () => {
     setup({ autoPlay: true });
 
     expectIsSelected('slide-0', true);
