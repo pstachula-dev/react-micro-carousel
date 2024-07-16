@@ -6,6 +6,7 @@ import dts from 'vite-plugin-dts';
 export default defineConfig({
   build: {
     minify: true,
+    copyPublicDir: false,
     lib: {
       name: 'simple-headless-react-carousel',
       entry: resolve(__dirname, 'src/lib/simple-headless-carousel/index.ts'),

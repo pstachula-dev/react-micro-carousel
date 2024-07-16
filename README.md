@@ -1,9 +1,11 @@
 # React Simple Headless Carousel
 
+![example workflow](https://github.com/pstachula-dev/simple-headless-carousel/actions/workflows/main.yml/badge.svg)
+
 ## Component features
 
 - Extremely small package size (gzipped):
-  - Javascript: 2.5kB
+  - Javascript: 2.6kB
   - CSS: 1.5kB
 - 0 external dependencies
 - Full typescript support
