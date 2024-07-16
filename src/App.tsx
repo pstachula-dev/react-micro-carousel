@@ -9,8 +9,8 @@ function App() {
         {/* example start */}
         <div className="my-4">
           <h2 className="my-2 text-2xl">Basic example</h2>
-          <ExampleCarousel infinite />
-          <pre className="my-4 rounded-lg bg-gray-900 p-4 text-left font-mono font-normal text-white">
+          <ExampleCarousel infinite lazy />
+          <pre className="my-4 rounded-lg bg-gray-900 p-4 text-left font-mono text-xs font-normal text-gray-400">
             <code>
               {`
 <CarouselProvider

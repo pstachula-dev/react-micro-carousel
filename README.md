@@ -68,17 +68,18 @@ import {
 
 Component is used to initialize the carousel context with configuration options and wrap the other components.
 
-| Prop          | Type    | Default | Required |
-| ------------- | ------- | ------- | -------- |
-| total         | number  | 0       | Yes      |
-| autoPlayDelay | number  | false   | No       |
-| slidesVisible | number  | 1       | No       |
-| step          | number  | 1       | No       |
-| threshold     | number  | 0.25    | No       |
-| infinite      | boolean | false   | No       |
-| disableTouch  | boolean | false   | No       |
-| lazy          | boolean | true    | No       |
-| autoPlay      | boolean | false   | No       |
+| Prop          | Type      | Default | Required |
+| ------------- | --------- | ------- | -------- |
+| children      | ReactNode |         | Yes      |
+| total         | number    | 0       | Yes      |
+| autoPlayDelay | number    | false   | No       |
+| slidesVisible | number    | 1       | No       |
+| step          | number    | 1       | No       |
+| threshold     | number    | 0.25    | No       |
+| infinite      | boolean   | false   | No       |
+| disableTouch  | boolean   | false   | No       |
+| lazy          | boolean   | true    | No       |
+| autoPlay      | boolean   | false   | No       |
 
 ### `<Carousel />`
 
@@ -97,6 +98,7 @@ A single slide in a carousel.
 | Prop      | Type      | Default | Required |
 | --------- | --------- | ------- | -------- |
 | children  | ReactNode |         | Yes      |
+| index     | number    |         | Yes      |
 | className | string    |         | No       |
 
 ### `<Dot />`
@@ -127,19 +129,19 @@ It provides auto generated dots for the carousel.
 
 ### `<NextButton />`
 
-| Prop      | Type     | Default | Required |
-| --------- | -------- | ------- | -------- |
-| className | string   |         | No       |
-| title     | string   |         | No       |
-| onClick   | Function |         | No       |
+| Prop      | Type      | Default | Required |
+| --------- | --------- | ------- | -------- |
+| className | string    |         | No       |
+| children  | ReactNode |         | Yes      |
+| onClick   | Function  |         | No       |
 
 ### `<PrevButton />`
 
-| Prop      | Type     | Default | Required |
-| --------- | -------- | ------- | -------- |
-| className | string   |         | No       |
-| title     | string   |         | No       |
-| onClick   | Function |         | No       |
+| Prop      | Type      | Default | Required |
+| --------- | --------- | ------- | -------- |
+| className | string    |         | No       |
+| children  | ReactNode |         | Yes      |
+| onClick   | Function  |         | No       |
 
 ### `<Counter />`
 
@@ -154,8 +156,8 @@ It provides auto generated dots for the carousel.
 - [x] Setup CI
 - [x] DX improvments prettier/eslint
 - [x] Add docs
-- [ ] Context initial props refactoring
-- [ ] Add unit tests
+- [x] Context initial props refactoring
+- [x] Add unit tests
 - [ ] Add examples
 - [x] Publish on NPM
 - [x] Add counter element

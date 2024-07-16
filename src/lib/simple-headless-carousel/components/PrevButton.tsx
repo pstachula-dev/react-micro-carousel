@@ -7,12 +7,11 @@ import { SliderButton, type SliderButtonProps } from './SliderButton';
  *
  * @component
  * @example
- * <PrevButton onClick={handlePrevButtonClick} className="custom-class" title="Skip to prev slide" />
+ * <PrevButton onClick={handlePrevButtonClick} className="custom-class">Prev</PrevButton>
  *
  * @param {ReactNode} children - The child components to be wrapped.
  * @param {Function} onClick - The callback function to be called when the button is clicked.
  * @param {string} className - An optional class name to be applied to the button.
- * @param {string} title - An optional title to be displayed on the button.
  */
 export const PrevButton = memo(
   ({ onClick, className, children }: SliderButtonProps) => {

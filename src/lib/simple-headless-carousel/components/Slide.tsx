@@ -18,7 +18,7 @@ type SlideProps = {
  * @param {string} className - Additional CSS classes for the slide.
  */
 export const Slide = memo(({ children, index, className }: SlideProps) => {
-  const { state, initConfig } = useContext(CarouselContext);
+  const { state } = useContext(CarouselContext);
   const isVisible = useRef(false);
   const intersectionRef = useRef(null);
   const { entry } = useIntersectionObserver({
@@ -26,8 +26,7 @@ export const Slide = memo(({ children, index, className }: SlideProps) => {
     opts: { threshold: 0.5 },
   });
 
-  const { lazy } = initConfig;
-  const { currentIndex, slidesVisible } = state;
+  const { currentIndex, slidesVisible, lazy } = state;
 
   if (!isVisible.current && entry?.isIntersecting) {
     isVisible.current = entry.isIntersecting;
@@ -35,9 +34,8 @@ export const Slide = memo(({ children, index, className }: SlideProps) => {
 
   const showLazy = lazy ? isVisible.current : true;
   const showSlide = currentIndex === index || showLazy;
-  const isGreater = index >= currentIndex;
-  const isLess = index < currentIndex + slidesVisible;
-  const isSelected = isGreater && isLess;
+  const isSelected =
+    index >= currentIndex && index < currentIndex + slidesVisible;
 
   return (
     <div

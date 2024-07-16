@@ -27,12 +27,15 @@ export function CarouselProvider({
 } & Partial<CarouselState>) {
   const { dispatch, state } = useCarouselReducer();
   const ctx = useMemo(
-    () => ({ dispatch, state, initConfig: configProps }),
+    () => ({
+      dispatch,
+      state: { ...configProps, ...state },
+    }),
     [state, dispatch, configProps],
   );
 
   useMergeConfig({ dispatch, ...configProps });
-  useAutoplay(ctx);
+  useAutoplay({ dispatch, ctx });
 
   return (
     <CarouselContext.Provider value={ctx}>{children}</CarouselContext.Provider>

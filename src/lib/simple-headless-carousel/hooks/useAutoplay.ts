@@ -1,10 +1,14 @@
 import { useEffect } from 'react';
-import { useCarouselReducer } from './useCarouselReducer';
+import { type CarouselReduceDispatch } from './useCarouselReducer';
 import type { CarouselContextProps } from '../context/CarouselContext';
 
-export const useAutoplay = (ctx: CarouselContextProps) => {
-  const { dispatch } = useCarouselReducer();
-
+export const useAutoplay = ({
+  ctx,
+  dispatch,
+}: {
+  ctx: CarouselContextProps;
+  dispatch: CarouselReduceDispatch;
+}) => {
   useEffect(() => {
     const { state } = ctx;
 
@@ -21,7 +25,5 @@ export const useAutoplay = (ctx: CarouselContextProps) => {
         clearInterval(intervalId);
       };
     }
-
-    return undefined;
   }, [ctx, dispatch]);
 };

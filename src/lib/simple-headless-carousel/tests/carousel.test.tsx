@@ -1,6 +1,6 @@
-import { expect, describe, it, vi } from 'vitest';
+import { expect, describe, it, vi, beforeEach, afterEach } from 'vitest';
 import userEvent from '@testing-library/user-event';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import {
   CarouselProvider,
   Carousel,
@@ -121,12 +121,85 @@ describe('Check disableTouch logic', () => {
   });
 });
 
-// describe('Check onMove finalIndex logic', () => {});
+describe('Check slidesVisible logic', () => {
+  it('Should show the first two slides', () => {
+    setup({ slidesVisible: 2 });
 
-// describe('Check lazy loading logic', () => {});
+    expectIsSelected('slide-0', true);
+    expectIsSelected('slide-1', true);
+    expectIsSelected('slide-2', false);
+  });
 
-// describe('Check autoPlay logic', () => {});
+  it('Should show the second and third slides', async () => {
+    setup({ slidesVisible: 2 });
 
-// describe('Check step logic', () => {});
+    await userEvent.click(screen.getByText('Next'));
 
-// // describe('Check slidesVisible logic', () => {});
+    expectIsSelected('slide-0', false);
+    expectIsSelected('slide-1', true);
+    expectIsSelected('slide-2', true);
+  });
+
+  it('Should show the first and second slides', async () => {
+    setup({ slidesVisible: 2 });
+
+    await userEvent.click(screen.getByText('Next'));
+    await userEvent.click(screen.getByText('Prev'));
+
+    expectIsSelected('slide-0', true);
+    expectIsSelected('slide-1', true);
+    expectIsSelected('slide-2', false);
+  });
+});
+
+describe('Check step logic', () => {
+  it('Should move by 2 steps', async () => {
+    setup({ step: 2 });
+
+    expectIsSelected('slide-0', true);
+    expectIsSelected('slide-1', false);
+
+    await userEvent.click(screen.getByText('Next'));
+
+    expectIsSelected('slide-0', false);
+    expectIsSelected('slide-1', false);
+    expectIsSelected('slide-2', true);
+  });
+
+  it('Should move by 2 steps when 2 slides visible', async () => {
+    setup({ slidesVisible: 2, step: 2 });
+
+    expectIsSelected('slide-0', true);
+    expectIsSelected('slide-1', true);
+    expectIsSelected('slide-2', false);
+
+    await userEvent.click(screen.getByText('Next'));
+
+    expectIsSelected('slide-0', false);
+    expectIsSelected('slide-1', false);
+    expectIsSelected('slide-2', true);
+  });
+});
+
+describe('Check autoPlay logic', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  it.only('Should start auto play', async () => {
+    setup({ autoPlay: true });
+
+    expectIsSelected('slide-0', true);
+
+    vi.advanceTimersByTime(2000);
+
+    await waitFor(() => {
+      expectIsSelected('slide-0', false);
+      expectIsSelected('slide-1', true);
+    });
+  });
+});
