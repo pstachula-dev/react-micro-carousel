@@ -22,6 +22,9 @@
     "simple",
     "component"
   ],
+  "workspaces": [
+    "packages/*"
+  ],
   "type": "module",
   "scripts": {
     "dev": "vite",

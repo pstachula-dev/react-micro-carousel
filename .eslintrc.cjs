@@ -15,7 +15,7 @@ module.exports = {
     sourceType: 'module',
     project: ['./tsconfig.json'],
   },
-  ignorePatterns: ['dist', 'vite.*.ts'],
+  ignorePatterns: ['dist', 'packages', 'vite.*.ts'],
   rules: {
     'react-refresh/only-export-components': [
       'warn',
