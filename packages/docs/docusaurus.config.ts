@@ -56,13 +56,13 @@ const config: Config = {
       },
       items: [
         {
-          to: 'docs/category/examples',
+          to: 'docs/tutorial/installation',
           position: 'left',
           label: 'Docs',
         },
         {
           position: 'left',
-          to: 'docs/category/api',
+          to: 'docs/api/components-api',
           label: 'API',
         },
         {

@@ -23,7 +23,16 @@ const sidebars: SidebarsConfig = {
           "Let's learn about the most important Docusaurus concepts!",
         keywords: ['guides'],
       },
-      items: ['tutorial/installation', 'tutorial/basic', 'tutorial/lazy'],
+      items: [
+        'tutorial/installation',
+        'tutorial/autoplay',
+        'tutorial/infinite',
+        'tutorial/basic',
+        'tutorial/lazy',
+        'tutorial/slidesVisible',
+        'tutorial/step',
+        'tutorial/threshold',
+      ],
     },
     {
       type: 'category',
