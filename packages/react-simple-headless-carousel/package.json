@@ -1,0 +1,77 @@
+{
+  "name": "react-simple-headless-carousel",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pstachula-dev/simple-headless-carousel.git"
+  },
+  "author": "Paweł Stachula",
+  "license": "MIT",
+  "homepage": "https://simple-headless-carousel.onrender.com/",
+  "version": "0.0.18",
+  "sideEffects": false,
+  "description": "React simple headless carousel",
+  "keywords": [
+    "react",
+    "reactjs",
+    "react-carousel",
+    "slider",
+    "tailwind",
+    "carousel",
+    "headless",
+    "simple",
+    "component"
+  ],
+  "workspaces": [
+    "packages/*"
+  ],
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "test": "vitest",
+    "test:lint": "vitest --watch=false",
+    "test:ui": "vitest --ui",
+    "build": "vite build",
+    "preview": "vite preview",
+    "tsc": "tsc --noEmit",
+    "format": "prettier --write .",
+    "format:ci": "prettier --check .",
+    "lint": "eslint . --ext ts,tsx",
+    "lint:fix": "eslint . --ext ts,tsx --fix",
+    "build:lib": "vite build -c vite.lib.config.ts",
+    "build:css": "NODE_ENV=production tailwindcss -o dist/styles.min.css -m",
+    "build:npm": "npm run build:lib && LIB_MODE=lib npm run build:css",
+    "prepare": "husky"
+  },
+  "files": [
+    "/dist"
+  ],
+  "main": "dist/simple-headless-carousel.umd.cjs",
+  "module": "dist/simple-headless-carousel.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/simple-headless-carousel.js",
+      "require": "./dist/simple-headless-carousel.umd.cjs",
+      "types": "./dist/index.d.ts"
+    },
+    "./styles.min.css": "./dist/styles.min.css"
+  },
+  "peerDependencies": {
+    "react": "16.x || 17.x || 18.x",
+    "react-dom": "16.x || 17.x || 18.x"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.4.2",
+    "@testing-library/react": "^13.2.0",
+    "@testing-library/user-event": "^14.5.2",
+    "@vitejs/plugin-react": "^4.2.1",
+    "@vitest/ui": "latest",
+    "jsdom": "^24.0.0",
+    "tailwindcss": "^3.4.4",
+    "vite": "^5.2.0",
+    "vite-plugin-dts": "^3.9.1",
+    "vite-plugin-lib-inject-css": "^2.1.1",
+    "vitest": "^2.0.2"
+  }
+}

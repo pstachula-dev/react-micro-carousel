@@ -31,7 +31,7 @@ const sidebars: SidebarsConfig = {
         type: 'generated-index',
       },
       label: 'API',
-      items: ['api/example-basic'],
+      items: ['api/components-api'],
     },
   ],
 
