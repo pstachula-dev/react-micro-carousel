@@ -19,9 +19,16 @@ export const CarouselDemo = ({
   lazy,
   threshold,
   currentIndex,
-}: CarouselState) => {
+  showButtons = false,
+}: CarouselState & { showButtons?: boolean }) => {
   return (
-    <div style={{ width: 760, maxWidth: '100%' }}>
+    <div
+      style={{
+        width: 760,
+        maxWidth: '100%',
+        margin: '50px auto',
+      }}
+    >
       <CarouselProvider
         autoPlayDelay={autoPlayDelay}
         autoPlay={autoPlay}
@@ -52,18 +59,26 @@ export const CarouselDemo = ({
           </Slide>
         </Carousel>
 
-        <div className="flex justify-center">
-          <DotsGroup />
-        </div>
+        {showButtons && (
+          <>
+            <div className="flex justify-center">
+              <DotsGroup colorActive="bg-active" colorInactive="bg-default" />
+            </div>
 
-        <div className="flex justify-center gap-2">
-          <span>Counter:</span>
-          <Counter />
-        </div>
-        <div className="flex justify-center gap-4">
-          <PrevButton className="rounded-md border px-4 py-1">Prev</PrevButton>
-          <NextButton className="rounded-md border px-4 py-1">Next</NextButton>
-        </div>
+            <div className="flex justify-center gap-2">
+              <span>Counter:</span>
+              <Counter />
+            </div>
+            <div className="flex justify-center gap-4">
+              <PrevButton className="rounded-md border px-4 py-1">
+                Prev
+              </PrevButton>
+              <NextButton className="rounded-md border px-4 py-1">
+                Next
+              </NextButton>
+            </div>
+          </>
+        )}
       </CarouselProvider>
     </div>
   );

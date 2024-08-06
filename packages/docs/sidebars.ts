@@ -25,9 +25,10 @@ const sidebars: SidebarsConfig = {
       },
       items: [
         'tutorial/installation',
+        'tutorial/basic',
+        'tutorial/buttons',
         'tutorial/autoplay',
         'tutorial/infinite',
-        'tutorial/basic',
         'tutorial/lazy',
         'tutorial/slidesVisible',
         'tutorial/step',

@@ -1,11 +1,11 @@
 import { CarouselDemo } from '@site/src/components/CarouselDemo/CarouselDemo';
 
-# Slides visible
+# Buttons
 
-<CarouselDemo slidesVisible={2} />
+<CarouselDemo showButtons />
 
 ```tsx
-<CarouselProvider total={5} slidesVisible={2}>
+<CarouselProvider total={5}>
   <Carousel>
     <Slide index={0}>
       <img src="/imgs/img1.jpg" />
@@ -23,5 +23,17 @@ import { CarouselDemo } from '@site/src/components/CarouselDemo/CarouselDemo';
       <img src="/imgs/img5.jpg" />
     </Slide>
   </Carousel>
+
+  <DotsGroup />
+
+  <div>
+    <span>Counter:</span>
+    <Counter />
+  </div>
+
+  <div>
+    <PrevButton>Prev</PrevButton>
+    <NextButton>Next</NextButton>
+  </div>
 </CarouselProvider>
 ```
