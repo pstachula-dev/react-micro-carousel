@@ -1,0 +1,34 @@
+
+
+import { CarouselDemo } from '@site/src/components/CarouselDemo/CarouselDemo';
+
+# Lazy
+
+<CarouselDemo lazy />
+
+
+```tsx
+<CarouselProvider 
+  total={5}
+  slideHeight={400}
+  lazy
+>
+  <Carousel>
+    <Slide index={0}>
+      <img src="/imgs/img1.jpg" />
+    </Slide>
+    <Slide index={1}>
+      <img src="/imgs/img2.jpg" />
+    </Slide>
+    <Slide index={2}>
+      <img src="/imgs/img3.jpg" />
+    </Slide>
+    <Slide index={3}>
+      <img src="/imgs/img4.jpg" />
+    </Slide>
+    <Slide index={4}>
+      <img src="/imgs/img5.jpg" />
+    </Slide>
+  </Carousel>
+</CarouselProvider>
+```

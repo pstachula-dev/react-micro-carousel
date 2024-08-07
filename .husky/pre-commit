@@ -1,3 +1,4 @@
-npm run test:lint
-npm run tsc
-npm run format
+cd packages/react-simple-headless-carousel \
+&& npm run test:lint \
+&& npm run tsc \
+&& npm run format

@@ -1,0 +1,42 @@
+import { CarouselDemo } from '@site/src/components/CarouselDemo/CarouselDemo';
+
+# Buttons
+
+<CarouselDemo showButtons />
+
+```tsx
+<CarouselProvider 
+  total={5}
+  slideHeight={400}
+>
+  <Carousel>
+    <Slide index={0}>
+      <img src="/imgs/img1.jpg" />
+    </Slide>
+    <Slide index={1}>
+      <img src="/imgs/img2.jpg" />
+    </Slide>
+    <Slide index={2}>
+      <img src="/imgs/img3.jpg" />
+    </Slide>
+    <Slide index={3}>
+      <img src="/imgs/img4.jpg" />
+    </Slide>
+    <Slide index={4}>
+      <img src="/imgs/img5.jpg" />
+    </Slide>
+  </Carousel>
+
+  <DotsGroup />
+
+  <div>
+    <span>Counter:</span>
+    <Counter />
+  </div>
+
+  <div>
+    <PrevButton>Prev</PrevButton>
+    <NextButton>Next</NextButton>
+  </div>
+</CarouselProvider>
+```
