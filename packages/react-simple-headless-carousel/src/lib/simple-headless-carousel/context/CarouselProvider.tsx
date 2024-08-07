@@ -7,6 +7,11 @@ import { CarouselContext } from './CarouselContext';
 import { useAutoplay } from '../hooks/useAutoplay';
 import { useMergeConfig } from '../hooks/useMergeConfig';
 
+type Props = Partial<CarouselState> &
+  Pick<CarouselState, 'total' | 'slideHeight'> & {
+    children: ReactNode;
+  };
+
 /**
  * A provider component for the Carousel context.
  *
@@ -18,13 +23,9 @@ import { useMergeConfig } from '../hooks/useMergeConfig';
  * @param {number} slidesVisible - The number of slides visible at a time.
  * @param {boolean} infinite - Whether the carousel should loop infinitely.
  * @param {number} step - The number of slides to move when navigating.
+ * @param {number} slideHeight - The number of slide height in pixels.
  */
-export function CarouselProvider({
-  children,
-  ...configProps
-}: {
-  children: ReactNode;
-} & Partial<CarouselState>) {
+export function CarouselProvider({ children, ...configProps }: Props) {
   const { dispatch, state } = useCarouselReducer();
   const ctx = useMemo(
     () => ({

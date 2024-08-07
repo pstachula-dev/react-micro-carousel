@@ -10,6 +10,7 @@ export type DispatchOpts = {
 };
 
 export type CarouselState = {
+  slideHeight: number;
   total: number;
   // optional
   currentIndex: number;
@@ -29,6 +30,7 @@ export const stateDefaults: CarouselState = {
   currentIndex: 0,
   total: 0,
   step: 1,
+  slideHeight: 0,
   autoPlayDelay: 2000,
   slidesVisible: 1,
   threshold: 0.25,

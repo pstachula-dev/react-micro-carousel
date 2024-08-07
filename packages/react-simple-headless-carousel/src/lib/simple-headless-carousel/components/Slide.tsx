@@ -26,7 +26,7 @@ export const Slide = memo(({ children, index, className }: SlideProps) => {
     opts: { threshold: 0.5 },
   });
 
-  const { currentIndex, slidesVisible, lazy } = state;
+  const { currentIndex, slidesVisible, lazy, slideHeight } = state;
 
   if (!isVisible.current && entry?.isIntersecting) {
     isVisible.current = entry.isIntersecting;
@@ -40,7 +40,11 @@ export const Slide = memo(({ children, index, className }: SlideProps) => {
   return (
     <div
       role="row"
-      className={clsx('pointer-events-none relative w-full', className)}
+      className={clsx(
+        'slide-item pointer-events-none relative w-full',
+        className,
+      )}
+      style={{ height: slideHeight }}
       ref={intersectionRef}
       data-index={index}
       data-testid={`slide-${index}`}

@@ -14,6 +14,10 @@
 - Lazy image loading
 - Responsive support
 
+## Documentation
+
+[Simple react carousel docs](https://simple-react-carousel.onrender.com/)
+
 ## How to use:
 
 ### If you are using Tailwind:

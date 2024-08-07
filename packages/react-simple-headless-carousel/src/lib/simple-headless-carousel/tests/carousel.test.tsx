@@ -35,6 +35,7 @@ const setup = ({
       lazy={lazy}
       threshold={threshold}
       currentIndex={currentIndex}
+      slideHeight={400}
       total={3}
     >
       <Carousel>

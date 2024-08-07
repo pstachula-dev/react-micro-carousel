@@ -17,6 +17,7 @@ export const useMergeConfig = ({
   step,
   lazy,
   infinite,
+  slideHeight,
   total,
 }: Partial<CarouselState> & { dispatch: CarouselReduceDispatch }) => {
   useEffect(() => {
@@ -38,6 +39,7 @@ export const useMergeConfig = ({
           ? disableTouch
           : stateDefaults.disableTouch,
         total,
+        slideHeight,
       },
     });
   }, [
@@ -46,6 +48,7 @@ export const useMergeConfig = ({
     autoPlay,
     autoPlayDelay,
     threshold,
+    slideHeight,
     slidesVisible,
     infinite,
     lazy,

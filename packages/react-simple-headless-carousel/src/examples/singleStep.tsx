@@ -32,6 +32,7 @@ export const ExampleCarousel = ({
         lazy={lazy}
         threshold={threshold}
         currentIndex={currentIndex}
+        slideHeight={400}
         total={5}
       >
         <Carousel>

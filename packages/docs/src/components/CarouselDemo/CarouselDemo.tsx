@@ -25,6 +25,7 @@ export const CarouselDemo = ({
     <div
       style={{
         width: 760,
+        height: 600,
         maxWidth: '100%',
         margin: '50px auto',
       }}
