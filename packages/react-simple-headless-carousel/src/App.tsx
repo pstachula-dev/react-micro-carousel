@@ -15,6 +15,7 @@ function App() {
               {`
 <CarouselProvider
   total={5}
+  slideHeight={400}
 >
   <Carousel>
     <Slide index={0}>

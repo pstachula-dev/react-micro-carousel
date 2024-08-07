@@ -77,6 +77,7 @@ Component is used to initialize the carousel context with configuration options 
 | Prop          | Type      | Default | Required |
 | ------------- | --------- | ------- | -------- |
 | children      | ReactNode |         | Yes      |
+| slideHeight   | number    | 0       | Yes      |
 | total         | number    | 0       | Yes      |
 | autoPlayDelay | number    | false   | No       |
 | slidesVisible | number    | 1       | No       |

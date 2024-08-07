@@ -5,7 +5,11 @@ import { CarouselDemo } from '@site/src/components/CarouselDemo/CarouselDemo';
 <CarouselDemo autoPlay />
 
 ```tsx
-<CarouselProvider total={5} autoPlay>
+<CarouselProvider 
+  total={5}
+  slideHeight={400}
+  autoPlay
+>
   <Carousel>
     <Slide index={0}>
       <img src="/imgs/img1.jpg" />

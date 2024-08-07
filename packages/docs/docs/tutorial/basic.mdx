@@ -5,7 +5,10 @@ import { CarouselDemo } from '@site/src/components/CarouselDemo/CarouselDemo';
 <CarouselDemo />
 
 ```tsx
-<CarouselProvider total={5}>
+<CarouselProvider 
+  total={5}
+  slideHeight={400}
+>
   <Carousel>
     <Slide index={0}>
       <img src="/imgs/img1.jpg" />

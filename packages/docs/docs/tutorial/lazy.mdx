@@ -8,7 +8,11 @@ import { CarouselDemo } from '@site/src/components/CarouselDemo/CarouselDemo';
 
 
 ```tsx
-<CarouselProvider total={5} lazy>
+<CarouselProvider 
+  total={5}
+  slideHeight={400}
+  lazy
+>
   <Carousel>
     <Slide index={0}>
       <img src="/imgs/img1.jpg" />
