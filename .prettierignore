@@ -35,3 +35,4 @@ build/
 .adminjs
 pnpm-lock.yaml
 .docusaurus
+*.min.css

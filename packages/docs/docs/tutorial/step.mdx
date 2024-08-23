@@ -5,12 +5,7 @@ import { CarouselDemo } from '@site/src/components/CarouselDemo/CarouselDemo';
 <CarouselDemo slidesVisible={2} step={2} />
 
 ```tsx
-<CarouselProvider 
-  total={5}
-  step={2}
-  slidesVisible={2}
-  slideHeight={400}
->
+<CarouselProvider total={5} step={2} slidesVisible={2} slideHeight={400}>
   <Carousel>
     <Slide index={0}>
       <img src="/imgs/img1.jpg" />

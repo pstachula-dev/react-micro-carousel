@@ -4,13 +4,8 @@ import { CarouselDemo } from '@site/src/components/CarouselDemo/CarouselDemo';
 
 <CarouselDemo threshold={0.75} />
 
-
 ```tsx
-<CarouselProvider 
-  total={5}
-  threshold={0.75}
-  slideHeight={400}
->
+<CarouselProvider total={5} threshold={0.75} slideHeight={400}>
   <Carousel>
     <Slide index={0}>
       <img src="/imgs/img1.jpg" />
