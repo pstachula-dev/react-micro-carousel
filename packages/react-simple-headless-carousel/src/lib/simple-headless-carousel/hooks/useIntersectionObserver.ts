@@ -32,6 +32,7 @@ export const useIntersectionObserver = <T extends HTMLElement>({
     return () => {
       observer.disconnect();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ref, opts.threshold, opts.root, opts.rootMargin]);
 
   return { entry };

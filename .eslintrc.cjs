@@ -15,7 +15,7 @@ module.exports = {
     sourceType: 'module',
     project: ['./tsconfig.json'],
   },
-  ignorePatterns: ['dist', 'packages', 'vite.*.ts'],
+  ignorePatterns: ['dist'],
   rules: {
     'react-refresh/only-export-components': [
       'warn',
@@ -59,7 +59,6 @@ module.exports = {
         'no-restricted-syntax': 'off',
         '@typescript-eslint/dot-notation': 'off',
         '@typescript-eslint/no-misused-promises': 'off',
-        '@typescript-eslint/no-use-before-define': 'off',
       },
     },
     {

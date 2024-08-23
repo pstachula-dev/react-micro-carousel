@@ -2,6 +2,8 @@
 
 ![example workflow](https://github.com/pstachula-dev/simple-headless-carousel/actions/workflows/main.yml/badge.svg)
 
+![bundlesize](https://badgen.net/bundlephobia/minzip/react-simple-headless-carousel)
+
 ## Component features
 
 - Extremely small package size (gzipped):
