@@ -12,7 +12,8 @@
   "scripts": {
     "build:docs": "cd packages/docs && npm run build",
     "build:widget": "cd packages/react-simple-headless-carousel && npm run build:npm",
-    "tsc": "cd packages/react-simple-headless-carousel && npm run tsc",
+    "test:widget": "cd packages/react-simple-headless-carousel && npm run test",
+    "tsc:widget": "cd packages/react-simple-headless-carousel && npm run tsc",
     "format": "prettier --write .",
     "format:ci": "prettier --check .",
     "lint": "eslint . --ext ts,.tsx",
