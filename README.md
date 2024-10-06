@@ -1,4 +1,4 @@
-# React Simple Headless Carousel
+# React Micro Carousel
 
 ![example workflow](https://github.com/pstachula-dev/simple-headless-carousel/actions/workflows/main.yml/badge.svg)
 

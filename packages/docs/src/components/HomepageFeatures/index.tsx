@@ -1,39 +1,59 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable global-require */
 import clsx from 'clsx';
+import { ReactNode } from 'react';
+import { Weight, Rocket, PaintBucket } from 'lucide-react';
 import Heading from '@theme/Heading';
 import styles from './styles.module.css';
 
 type FeatureItem = {
   title: string;
-  Svg: React.ComponentType<React.ComponentProps<'svg'>>;
+  Svg: ReactNode;
   description: JSX.Element;
 };
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Easy to Use',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
-    description: <>TODO...</>,
+    title: 'Core Features',
+    Svg: <Weight style={{ marginTop: 100 }} size={60} />,
+    description: (
+      <div className={styles.featureItem}>
+        The Carousel is a <strong>lightweight</strong>,{' '}
+        <strong>dependency-free</strong> component with{' '}
+        <strong>TypeScript</strong> support. It&apos;s{' '}
+        <strong>Tailwind CSS</strong> compatible and offers{' '}
+        <strong>responsive</strong> design for various devices.
+      </div>
+    ),
   },
   {
-    title: 'Focus on minimalism',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
-    description: <>TODO...</>,
+    title: 'User Interaction',
+    Svg: <Rocket style={{ marginTop: 100 }} size={60} />,
+    description: (
+      <div className={styles.featureItem}>
+        This carousel handles touch and mouse events smoothly and implements{' '}
+        <strong>lazy image loading</strong> for optimized performance across
+        different devices.
+      </div>
+    ),
   },
   {
-    title: 'Powered by React',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
-    description: <>TODO...</>,
+    title: 'Customization',
+    Svg: <PaintBucket style={{ marginTop: 100 }} size={60} />,
+    description: (
+      <div className={styles.featureItem}>
+        Easy to integrate with Tailwind or non-Tailwind projects, this{' '}
+        <strong>headless styles</strong> allows for custom styling while
+        maintaining core functionality.
+      </div>
+    ),
   },
 ];
 
 function Feature({ title, Svg, description }: FeatureItem) {
   return (
     <div className={clsx('col col--4')}>
-      <div className="text--center">
-        <Svg className={styles.featureSvg} role="img" />
-      </div>
+      <div className="text--center">{Svg}</div>
       <div className="text--center padding-horiz--md">
         <Heading as="h3">{title}</Heading>
         <p>{description}</p>

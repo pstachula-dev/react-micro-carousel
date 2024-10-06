@@ -4,7 +4,7 @@ function App() {
   return (
     <div className="h-lvh w-full bg-gray-800  font-bold text-white">
       <div className="mx-auto flex max-w-3xl flex-col gap-6 pt-10 text-center">
-        <h1 className="my-6 text-3xl">React Simple Headless Carousel Demo</h1>
+        <h1 className="my-6 text-3xl">React Micro Carousel Demo</h1>
 
         {/* example start */}
         <div className="my-4">

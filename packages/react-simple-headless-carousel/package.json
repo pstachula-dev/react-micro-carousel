@@ -10,7 +10,7 @@
   "homepage": "https://simple-react-carousel.onrender.com/",
   "version": "0.0.19",
   "sideEffects": false,
-  "description": "React simple headless carousel",
+  "description": "React Micro Carousel",
   "keywords": [
     "react",
     "reactjs",

@@ -3,7 +3,7 @@ import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
-  title: 'React Simple Headless Carousel',
+  title: 'React Micro Carousel',
   tagline: 'Documentation and examples',
   favicon: 'img/favicon.ico',
 
@@ -49,7 +49,7 @@ const config: Config = {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      title: 'React Simple Headless Carousel',
+      title: 'React Micro Carousel',
       logo: {
         alt: 'My Site Logo',
         src: 'img/logo.svg',
@@ -80,7 +80,7 @@ const config: Config = {
           items: [
             {
               label: 'Tutorial',
-              to: '/docs/intro',
+              to: '/docs/tutorial/basic',
             },
           ],
         },
@@ -89,11 +89,11 @@ const config: Config = {
           items: [
             {
               label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
+              href: 'https://github.com/pstachula-dev/simple-headless-carousel',
             },
             {
               label: 'NPM',
-              href: 'https://github.com/facebook/docusaurus',
+              href: 'https://www.npmjs.com/package/react-simple-headless-carousel',
             },
           ],
         },
@@ -102,7 +102,7 @@ const config: Config = {
           items: [],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} React Micro Carousel, Inc. Built with Docusaurus.`,
     },
     prism: {
       theme: prismThemes.dracula,
