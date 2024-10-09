@@ -1,5 +1,5 @@
 {
-  "name": "react-simple-headless-carousel",
+  "name": "react-micro-carousel",
   "private": false,
   "repository": {
     "type": "git",
@@ -17,6 +17,7 @@
     "react-carousel",
     "slider",
     "tailwind",
+    "micro",
     "carousel",
     "headless",
     "simple",
@@ -46,13 +47,13 @@
   "files": [
     "/dist"
   ],
-  "main": "dist/simple-headless-carousel.umd.cjs",
-  "module": "dist/simple-headless-carousel.js",
+  "main": "dist/react-micro-carousel.umd.cjs",
+  "module": "dist/react-micro-carousel.js",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/simple-headless-carousel.js",
-      "require": "./dist/simple-headless-carousel.umd.cjs",
+      "import": "./dist/react-micro-carousel.js",
+      "require": "./dist/react-micro-carousel.umd.cjs",
       "types": "./dist/index.d.ts"
     },
     "./styles.min.css": "./dist/styles.min.css"

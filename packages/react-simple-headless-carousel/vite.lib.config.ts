@@ -8,10 +8,10 @@ export default defineConfig({
     minify: true,
     copyPublicDir: false,
     lib: {
-      name: 'simple-headless-react-carousel',
+      name: 'react-micro-carousel',
       entry: resolve(__dirname, 'src/lib/simple-headless-carousel/index.ts'),
       formats: ['es', 'umd'],
-      fileName: 'simple-headless-carousel',
+      fileName: 'react-micro-carousel',
     },
     rollupOptions: {
       external: ['react', 'react/jsx-runtime'],

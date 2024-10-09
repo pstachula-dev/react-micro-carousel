@@ -1,8 +1,8 @@
 # React Micro Carousel
 
-![example workflow](https://github.com/pstachula-dev/simple-headless-carousel/actions/workflows/main.yml/badge.svg)
+![example workflow](https://github.com/pstachula-dev/react-micro-carousel/actions/workflows/main.yml/badge.svg)
 
-![bundlesize](https://badgen.net/bundlephobia/minzip/react-simple-headless-carousel)
+![bundlesize](https://badgen.net/bundlephobia/minzip/react-micro-carousel)
 
 ## Component features
 
@@ -30,7 +30,7 @@
 export default {
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
-    "./node_modules/react-simple-headless-carousel/**/*.js",
+    "./node_modules/react-micro-carousel/**/*.js",
   ],
 } satisfies Config;
 ```
@@ -38,7 +38,7 @@ export default {
 ### ...other way?
 
 ```js
-import 'react-simple-headless-carousel/styles.min.css';
+import 'react-micro-carousel/styles.min.css';
 ```
 
 ### Components markup:
@@ -52,7 +52,7 @@ import {
   NextButton,
   PrevButton,
   Slide,
-} from 'react-simple-headless-carousel';
+} from 'react-micro-carousel';
 
 <CarouselProvider total={2}>
   <Carousel>
