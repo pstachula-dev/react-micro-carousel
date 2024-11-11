@@ -13,7 +13,7 @@ module.exports = {
     sourceType: 'module',
     project: ['./tsconfig.json'],
   },
-  ignorePatterns: ['dist'],
+  ignorePatterns: ['dist', 'vitest.config.ts'],
   rules: {
     'react/jsx-filename-extension': [1, { extensions: ['.tsx', '.jsx'] }],
     'react-refresh/only-export-components': [

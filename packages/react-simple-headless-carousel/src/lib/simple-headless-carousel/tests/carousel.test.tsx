@@ -1,4 +1,13 @@
-import { expect, describe, it, vi, beforeEach, afterEach } from 'vitest';
+import {
+  expect,
+  describe,
+  it,
+  vi,
+  beforeEach,
+  afterEach,
+  beforeAll,
+  afterAll,
+} from 'vitest';
 import userEvent from '@testing-library/user-event';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
@@ -184,20 +193,10 @@ describe('Check step logic', () => {
 });
 
 describe('Check autoPlay logic', () => {
-  beforeEach(() => {
-    vi.useFakeTimers();
-  });
-
-  afterEach(() => {
-    vi.restoreAllMocks();
-  });
-
   it('Should start auto play', async () => {
-    setup({ autoPlay: true });
+    setup({ autoPlay: true, autoPlayDelay: 50 });
 
     expectIsSelected('slide-0', true);
-
-    vi.advanceTimersByTime(2000);
 
     await waitFor(() => {
       expectIsSelected('slide-0', false);
