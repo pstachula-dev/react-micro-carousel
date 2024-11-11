@@ -7,7 +7,7 @@ import {
   NextButton,
   PrevButton,
   Slide,
-} from 'react-simple-headless-carousel';
+} from 'react-micro-carousel';
 
 export const CarouselDemo = ({
   autoPlayDelay,

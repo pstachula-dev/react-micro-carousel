@@ -28,7 +28,7 @@ const config: Config = {
   },
 
   clientModules: [
-    '../../node_modules/react-simple-headless-carousel/dist/styles.min.css',
+    '../../node_modules/react-micro-carousel/dist/styles.min.css',
   ],
 
   presets: [
@@ -93,7 +93,7 @@ const config: Config = {
             },
             {
               label: 'NPM',
-              href: 'https://www.npmjs.com/package/react-simple-headless-carousel',
+              href: 'https://www.npmjs.com/package/react-micro-carousel',
             },
           ],
         },

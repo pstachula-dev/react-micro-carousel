@@ -57,6 +57,7 @@ const setup = ({
 };
 
 const expectIsSelected = (id: string, selected: boolean) => {
+  // @ts-expect-error:next-line
   expect(screen.getByTestId(id)).toHaveAttribute(
     'aria-selected',
     `${selected}`,
