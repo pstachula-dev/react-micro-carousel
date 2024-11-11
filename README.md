@@ -4,7 +4,7 @@
 
 ![bundlesize](https://badgen.net/bundlephobia/minzip/react-micro-carousel)
 
-## Component features
+## Features
 
 - Extremely small package size (gzipped):
   - Javascript: 2.6kB
@@ -16,11 +16,12 @@
 - Lazy image loading
 - Responsive support
 
-## Documentation
+## Links
 
-[Simple react carousel docs](https://simple-react-carousel.onrender.com/)
+[Docs](https://simple-headless-carousel.onrender.com/)
+[NPM](https://www.npmjs.com/package/react-micro-carousel)
 
-## How to use:
+## How to use
 
 ### If you are using Tailwind:
 
@@ -35,13 +36,13 @@ export default {
 } satisfies Config;
 ```
 
-### ...other way?
+### Vanilla css
 
 ```js
 import 'react-micro-carousel/styles.min.css';
 ```
 
-### Components markup:
+### Components markup
 
 ```js
 import {
@@ -70,7 +71,7 @@ import {
 </CarouselProvider>
 ```
 
-## Props documentation:
+## Props documentation
 
 ### `<CarouselProvider />`
 
