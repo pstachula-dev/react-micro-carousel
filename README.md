@@ -4,6 +4,12 @@
 
 ![bundlesize](https://badgen.net/bundlephobia/minzip/react-micro-carousel)
 
+
+## Links
+
+- [Docs](https://simple-headless-carousel.onrender.com/)
+- [NPM](https://www.npmjs.com/package/react-micro-carousel)
+
 ## Features
 
 - Extremely small package size (gzipped):
@@ -16,10 +22,6 @@
 - Lazy image loading
 - Responsive support
 
-## Links
-
-[Docs](https://simple-headless-carousel.onrender.com/)
-[NPM](https://www.npmjs.com/package/react-micro-carousel)
 
 ## How to use
 
