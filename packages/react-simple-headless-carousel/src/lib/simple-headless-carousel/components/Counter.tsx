@@ -15,7 +15,7 @@ export const Counter = ({ className }: CounterProps) => {
 
   return (
     <div className={className}>
-      {state.currentIndex + 1} / {state.total}
+      {state.currentIndex + 1} /{state.total}
     </div>
   );
 };

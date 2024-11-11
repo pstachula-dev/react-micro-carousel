@@ -5,11 +5,9 @@ module.exports = {
   plugins: ['react-refresh', '@typescript-eslint/eslint-plugin'],
   extends: [
     'airbnb',
-    'airbnb-typescript',
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:react-hooks/recommended',
-    'prettier',
   ],
   parserOptions: {
     sourceType: 'module',
@@ -17,11 +15,17 @@ module.exports = {
   },
   ignorePatterns: ['dist'],
   rules: {
+    'react/jsx-filename-extension': [1, { extensions: ['.tsx', '.jsx'] }],
     'react-refresh/only-export-components': [
       'warn',
       { allowConstantExport: true },
     ],
     'promise/always-return': 'off',
+    'import/no-unresolved': 'off',
+    'object-curly-newline': 'off',
+    'operator-linebreak': 'off',
+    'react/jsx-one-expression-per-line': 'off',
+    quotes: 'off',
     'import/prefer-default-export': 'off',
     'import/no-extraneous-dependencies': 'off',
     'import/extensions': 'off',

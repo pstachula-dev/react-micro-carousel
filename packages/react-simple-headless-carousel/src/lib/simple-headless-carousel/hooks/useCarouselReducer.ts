@@ -3,12 +3,6 @@ import { CarouselError } from '../services/CarouseError';
 
 type CarouselAction = 'next' | 'prev' | 'setCurrentIndex' | 'setConfig';
 
-export type DispatchOpts = {
-  action: CarouselAction;
-  value?: number;
-  config?: Partial<CarouselState>;
-};
-
 export type CarouselState = {
   slideHeight: number;
   total: number;
@@ -24,8 +18,6 @@ export type CarouselState = {
   lazy: boolean;
 };
 
-export type CarouselReduceDispatch = Dispatch<DispatchOpts>;
-
 export const stateDefaults: CarouselState = {
   currentIndex: 0,
   total: 0,
@@ -39,6 +31,14 @@ export const stateDefaults: CarouselState = {
   infinite: false,
   lazy: false,
 };
+
+export type DispatchOpts = {
+  action: CarouselAction;
+  value?: number;
+  config?: Partial<CarouselState>;
+};
+
+export type CarouselReduceDispatch = Dispatch<DispatchOpts>;
 
 export const carouselReducer = (
   state: CarouselState,
