@@ -14,7 +14,6 @@ module.exports = {
   },
   ignorePatterns: ['dist', 'vitest.config.ts'],
   rules: {
-    'react/jsx-filename-extension': [1, { extensions: ['.tsx', '.jsx'] }],
     'react-refresh/only-export-components': [
       'warn',
       { allowConstantExport: true },
