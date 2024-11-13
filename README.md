@@ -4,7 +4,6 @@
 
 ![bundlesize](https://badgen.net/bundlephobia/minzip/react-micro-carousel)
 
-
 ## Links
 
 - [Docs](https://simple-headless-carousel.onrender.com/)
@@ -21,7 +20,6 @@
 - Handling touch/mouse events
 - Lazy image loading
 - Responsive support
-
 
 ## How to use
 
