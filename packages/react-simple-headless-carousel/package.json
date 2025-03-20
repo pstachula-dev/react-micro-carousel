@@ -8,7 +8,7 @@
   "author": "Paweł Stachula",
   "license": "MIT",
   "homepage": "https://simple-headless-carousel.onrender.com/",
-  "version": "0.0.27",
+  "version": "0.0.30",
   "sideEffects": false,
   "description": "React Micro Carousel",
   "keywords": [
