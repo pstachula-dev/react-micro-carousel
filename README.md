@@ -36,7 +36,6 @@ export default {
 } satisfies Config;
 ```
 
-
 ### Tailwind 4.x:
 
 `globals.css`
@@ -44,7 +43,6 @@ export default {
 ```css
 @source "../node_modules/react-micro-carousel";
 ```
-
 
 ### Vanilla css (prebuild for Tailwind 3)
 
@@ -78,7 +76,7 @@ import {
   <DotsGroup />
   <NextButton>Next</NextButton>
   <PrevButton>Prev</PrevButton>
-</CarouselProvider>
+</CarouselProvider>;
 ```
 
 ## Props documentation
