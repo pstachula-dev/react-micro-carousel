@@ -68,7 +68,7 @@ import {
   <DotsGroup />
   <NextButton>Next</NextButton>
   <PrevButton>Prev</PrevButton>
-</CarouselProvider>
+</CarouselProvider>;
 ```
 
 ## Props documentation
