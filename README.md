@@ -41,7 +41,7 @@ export default {
 `globals.css`
 
 ```css
-@source "../node_modules/react-micro-carousel";
+@source "../node_modules/react-micro-carousel/dist";
 ```
 
 ### Vanilla css (prebuild for Tailwind 3)
