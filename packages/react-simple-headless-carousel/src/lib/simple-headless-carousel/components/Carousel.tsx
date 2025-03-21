@@ -53,8 +53,9 @@ export const Carousel = memo(
       step,
       disableTouch,
     } = state;
-    const totalWidth = (fullSize * total) / slidesVisible;
+    const totalWidth = (fullSize * total) / (slidesVisible || 1);
     const totalWidthPercent = `${totalWidth}%`;
+
     const width = (refWidth || 0) / total;
     const cancelWrongTarget = ({ target }: SlideEvent) => {
       return target !== imgRef.current;
@@ -198,7 +199,7 @@ export const Carousel = memo(
         <div
           ref={imgRef}
           className={clsx(
-            'relative flex w-full flex-row',
+            'relative flex w-full flex-row items-stretch',
             isMoving && 'transition-transform duration-500',
             carouselClassName,
           )}

@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 export type SliderButtonProps = {
   children: ReactNode;
   action?: () => void;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   className?: string;
 };
 
@@ -26,9 +26,9 @@ export function SliderButton({
     <button
       className={className}
       type="button"
-      onClick={() => {
+      onClick={(e) => {
         action?.();
-        onClick?.();
+        onClick?.(e);
       }}
     >
       {children}

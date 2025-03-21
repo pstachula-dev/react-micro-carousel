@@ -27,6 +27,7 @@ type Props = Partial<CarouselState> &
  */
 export function CarouselProvider({ children, ...configProps }: Props) {
   const { dispatch, state } = useCarouselReducer();
+
   const ctx = useMemo(
     () => ({
       dispatch,

@@ -7,6 +7,36 @@ import {
 
 const isDefined = <T>(prop: T) => prop !== undefined;
 
+export const mergeConfig = ({
+  autoPlay,
+  autoPlayDelay,
+  slidesVisible,
+  threshold,
+  disableTouch,
+  step,
+  lazy,
+  infinite,
+  total,
+}: Partial<CarouselState>) => {
+  return {
+    autoPlayDelay: isDefined(autoPlayDelay)
+      ? autoPlayDelay
+      : stateDefaults.autoPlayDelay,
+    slidesVisible: isDefined(slidesVisible)
+      ? slidesVisible
+      : stateDefaults.slidesVisible,
+    autoPlay: isDefined(autoPlay) ? autoPlay : stateDefaults.autoPlay,
+    step: isDefined(step) ? step : stateDefaults.step,
+    infinite: isDefined(infinite) ? infinite : stateDefaults.infinite,
+    lazy: isDefined(lazy) ? lazy : stateDefaults.lazy,
+    threshold: isDefined(threshold) ? threshold : stateDefaults.threshold,
+    disableTouch: isDefined(disableTouch)
+      ? disableTouch
+      : stateDefaults.disableTouch,
+    total,
+  };
+};
+
 export const useMergeConfig = ({
   dispatch,
   autoPlay,
@@ -23,24 +53,18 @@ export const useMergeConfig = ({
   useEffect(() => {
     dispatch({
       action: 'setConfig',
-      config: {
-        autoPlayDelay: isDefined(autoPlayDelay)
-          ? autoPlayDelay
-          : stateDefaults.autoPlayDelay,
-        slidesVisible: isDefined(slidesVisible)
-          ? slidesVisible
-          : stateDefaults.slidesVisible,
-        autoPlay: isDefined(autoPlay) ? autoPlay : stateDefaults.autoPlay,
-        step: isDefined(step) ? step : stateDefaults.step,
-        infinite: isDefined(infinite) ? infinite : stateDefaults.infinite,
-        lazy: isDefined(lazy) ? lazy : stateDefaults.lazy,
-        threshold: isDefined(threshold) ? threshold : stateDefaults.threshold,
-        disableTouch: isDefined(disableTouch)
-          ? disableTouch
-          : stateDefaults.disableTouch,
-        total,
+      config: mergeConfig({
+        autoPlay,
+        autoPlayDelay,
+        slidesVisible,
+        threshold,
+        disableTouch,
+        step,
+        lazy,
+        infinite,
         slideHeight,
-      },
+        total,
+      }),
     });
   }, [
     dispatch,
