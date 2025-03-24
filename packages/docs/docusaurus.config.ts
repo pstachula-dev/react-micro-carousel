@@ -28,7 +28,7 @@ const config: Config = {
   },
 
   clientModules: [
-    '../../node_modules/react-micro-carousel/dist/styles.min.css',
+    '../../node_modules/react-micro-carousel/dist/react-micro-carousel.min.css',
   ],
 
   presets: [

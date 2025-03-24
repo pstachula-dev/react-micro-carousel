@@ -16,8 +16,9 @@ jobs:
           node-version: 22
           cache: 'npm'
       - run: npm ci
+      # Build first due to type creation
+      - run: npm run build:widget
       - run: npm run lint
       - run: npm run format:ci
       - run: npm run test:widget
       - run: npm run tsc:widget
-      - run: npm run build:widget

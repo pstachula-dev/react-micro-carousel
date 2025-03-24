@@ -23,7 +23,7 @@
 
 ## How to use
 
-### If you are using Tailwind:
+### Tailwind 3.x:
 
 `tailwind.config.ts`
 
@@ -36,7 +36,15 @@ export default {
 } satisfies Config;
 ```
 
-### Vanilla css
+### Tailwind 4.x:
+
+`globals.css`
+
+```css
+@source "../node_modules/react-micro-carousel/dist";
+```
+
+### Vanilla css (prebuild for Tailwind 3)
 
 ```js
 import 'react-micro-carousel/styles.min.css';

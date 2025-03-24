@@ -8,7 +8,7 @@
   "author": "Paweł Stachula",
   "license": "MIT",
   "homepage": "https://simple-headless-carousel.onrender.com/",
-  "version": "0.0.33",
+  "version": "0.0.34",
   "sideEffects": false,
   "description": "React Micro Carousel",
   "keywords": [
@@ -39,7 +39,7 @@
     "lint": "eslint . --ext ts,tsx",
     "lint:fix": "eslint . --ext ts,tsx --fix",
     "build:lib": "vite build -c vite.lib.config.ts",
-    "build:css": "NODE_ENV=production tailwindcss -o dist/styles.min.css -m",
+    "build:css": "NODE_ENV=production tailwindcss -o dist/react-micro-carousel.min.css -m",
     "build:npm": "npm run build:lib && LIB_MODE=lib npm run build:css && cp ../../README.md README.md && npm version patch",
     "prepare": "husky"
   },
@@ -52,27 +52,29 @@
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/react-micro-carousel.js",
-      "require": "./dist/react-micro-carousel.umd.cjs",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/react-micro-carousel.umd.cjs"
     },
-    "./styles.min.css": "./dist/styles.min.css"
+    "./styles.min.css": "./dist/react-micro-carousel.min.css"
   },
   "peerDependencies": {
-    "tailwindcss": "3.x || 4.x",
     "react": "16.x || 17.x || 18.x || 19.x",
-    "react-dom": "16.x || 17.x || 18.x || 19.x"
+    "react-dom": "16.x || 17.x || 18.x || 19.x",
+    "tailwindcss": "3.x || 4.x"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^6.6.3",
-    "@testing-library/react": "^16.0.1",
-    "@testing-library/user-event": "^14.5.2",
-    "@vitejs/plugin-react": "^4.3.3",
-    "jsdom": "^25.0.1",
-    "tailwindcss": "^3.4.14",
-    "vite": "^5.4.11",
-    "vite-plugin-dts": "^4.3.0",
-    "vite-plugin-lib-inject-css": "^2.1.1",
-    "vitest": "^2.1.4"
+    "@tailwindcss/vite": "^4.0.15",
+    "@testing-library/jest-dom": "6.5.0",
+    "@testing-library/react": "^16.2.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@tailwindcss/cli": "^4.0.15",
+    "@vitejs/plugin-react": "^4.3.4",
+    "jsdom": "^26.0.0",
+    "tailwindcss": "^4.0.15",
+    "vite": "^6.2.2",
+    "vite-plugin-dts": "^4.5.3",
+    "vite-plugin-lib-inject-css": "^2.2.1",
+    "vitest": "^3.0.9"
   }
 }

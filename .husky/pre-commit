@@ -1,4 +1,3 @@
-cd packages/react-simple-headless-carousel \
-&& npm run test:lint \
-&& npm run tsc \
-&& npm run format
+npm run lint
+npm run test:widget
+npm run format:ci
