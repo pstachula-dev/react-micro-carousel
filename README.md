@@ -4,9 +4,11 @@
 
 ![bundlesize](https://badgen.net/bundlephobia/minzip/react-micro-carousel)
 
+![NPM Version](https://img.shields.io/npm/v/:react-micro-carousel)
+
 ## Links
 
-- [Docs](https://simple-headless-carousel.onrender.com/)
+- [Examples & Documentation](https://simple-headless-carousel.onrender.com/)
 - [NPM](https://www.npmjs.com/package/react-micro-carousel)
 
 ## Features
@@ -23,7 +25,15 @@
 
 ## How to use
 
-### Tailwind 3.x:
+### Main Tailwind 4.x:
+
+`globals.css`
+
+```css
+@source "../node_modules/react-micro-carousel/dist";
+```
+
+### Legacy Tailwind 3.x:
 
 `tailwind.config.ts`
 
@@ -36,15 +46,7 @@ export default {
 } satisfies Config;
 ```
 
-### Tailwind 4.x:
-
-`globals.css`
-
-```css
-@source "../node_modules/react-micro-carousel/dist";
-```
-
-### Vanilla css (prebuild for Tailwind 3)
+### Vanilla css (prebuild for Tailwind 4)
 
 ```js
 import 'react-micro-carousel/styles.min.css';
