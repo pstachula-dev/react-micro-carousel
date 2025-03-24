@@ -30,7 +30,7 @@
   "scripts": {
     "dev": "vite",
     "test": "vitest",
-    "test:lint": "vitest --watch=false",
+    "test:ci": "vitest --watch=false",
     "build": "vite build",
     "preview": "vite preview",
     "tsc": "tsc --noEmit",
