@@ -1,10 +1,9 @@
 # React Micro Carousel
 
 ![example workflow](https://github.com/pstachula-dev/react-micro-carousel/actions/workflows/main.yml/badge.svg)
-
 ![bundlesize](https://badgen.net/bundlephobia/minzip/react-micro-carousel)
-
-![NPM Version](https://img.shields.io/npm/v/:react-micro-carousel)
+![NPM Version](https://img.shields.io/npm/v/react-micro-carousel)
+![GitHub License](https://img.shields.io/github/license/pstachula-dev/react-micro-carousel)
 
 ## Links
 
