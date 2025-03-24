@@ -6,7 +6,7 @@
   "sideEffects": false,
   "workspaces": [
     "packages/docs",
-    "packages/react-simple-headless-carousel"
+    "packages/react-micro-carousel"
   ],
   "type": "module",
   "scripts": {
